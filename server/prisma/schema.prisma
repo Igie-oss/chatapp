@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @unique
+  userName  String   @unique
+  password  String
+  email     String   @unique
+  updatedAt DateTime @updatedAt
+}
+
+type Member {
+  userId   String
+  userName String
+}
+
+model Channel {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  channelId String   @unique
+  isGroup   Boolean  @default(false)
+  members   Member[]
+  channelName String?
+}
+
+model Messages {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  messageId   String   @unique
+  channelId   String
+  senderId    String
+  sendAt      DateTime
+  content     String
+  contentType String
+}
+
+model Otp {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  otpId     String   @unique
+  otp       String
+  email     String   @unique
+  createdAt DateTime
+}
+
+type ImgData {
+  data     Bytes
+  mimetype String
+}
+
+model Avatar {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  avatarId String  @unique
+  imgData  ImgData
+}
