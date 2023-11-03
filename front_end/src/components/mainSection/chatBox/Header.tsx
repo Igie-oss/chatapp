@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import UserAvatar from "@/components/shared/UserAvatar";
-import useGenerateChannelMember from "@/hooks/useGenerateChannelMember";
 import useGetChannelInfo from "@/hooks/useGetChannelInfo";
 import { useAppStore } from "@/features/store";
 import Skeleton from "@/components/shared/Skeleton";
@@ -12,7 +11,6 @@ type Props = {
   toggelAside: () => void;
 };
 export default function Header({ toggelAside }: Props) {
-  const members = useGenerateChannelMember();
   const { channelId } = useParams();
   const userId = useAppStore((state) => state.user.userId);
   const { channel, isLoading } = useGetChannelInfo(channelId!);
@@ -31,7 +29,7 @@ export default function Header({ toggelAside }: Props) {
           <div className="flex gap-4 items-center">
             <Link
               title="Close"
-              to="/chat"
+              to="/chat/c/"
               className="lg:hidden border p-2 rounded-full flex hover:bg-secondary"
             >
               <MdArrowBackIosNew className="w-6 h-6 pointer-events-none" />

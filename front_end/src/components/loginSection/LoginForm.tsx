@@ -84,10 +84,10 @@ const LoginForm = () => {
               value={formik.values.email || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full h-10 outline-none pl-2 pr-10  bg-transparent text-sm border rounded-lg border-border ${
+              className={`w-full h-10 outline-none pl-2 pr-10  bg-transparent text-sm border rounded-lg ${
                 formik.touched.email && formik.errors.email
                   ? "border-destructive"
-                  : "border-foreground"
+                  : "border-border"
               }  `}
             />
             <span className="absolute right-1 bottom-5 p-2">
@@ -110,10 +110,10 @@ const LoginForm = () => {
               value={formik.values.password || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full h-10 outline-none pl-2 pr-10  text-sm bg-transparent  border rounded-lg border-border ${
+              className={`w-full h-10 outline-none pl-2 pr-10  text-sm bg-transparent  border rounded-lg ${
                 formik.touched.password && formik.errors.password
                   ? "border-destructive"
-                  : "border-foreground"
+                  : "border-border"
               }   `}
             />
             <button

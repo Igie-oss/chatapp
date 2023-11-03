@@ -24,7 +24,7 @@ function ChannelCard({ message }: Props) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/chat/${message.channelId}`);
+    navigate(`/chat/c/${message.channelId}`);
     seTMembers(message.members);
   };
 

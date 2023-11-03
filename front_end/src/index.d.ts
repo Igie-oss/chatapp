@@ -36,6 +36,10 @@ type TChannel = {
   channelName: string;
 };
 
+enum EContentType {
+  TEXT = "text",
+  IMG_URL = "image_url",
+}
 type TMessages = {
   id?: string;
   messageId: string;
@@ -43,7 +47,7 @@ type TMessages = {
   senderId: string;
   sendAt: Date;
   content: string;
-  contentType: "text" | "image";
+  contentType: EContent;
 };
 
 type TChannelMessages = TMessages & {

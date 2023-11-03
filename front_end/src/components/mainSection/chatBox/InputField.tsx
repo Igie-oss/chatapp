@@ -5,16 +5,22 @@ import { DateTime } from "luxon";
 import useEmitTyping from "@/hooks/useEmitTyping";
 import useGenerateChannel from "@/hooks/useGenerateChannel";
 import uuid from "react-uuid";
+import ImageInput from "./ImageInput";
+export enum EContentType {
+  TEXT = "text",
+  IMG_URL = "image_url",
+}
 export default function InputField() {
   const { channel } = useGenerateChannel();
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [content, setContent] = useState("");
+  const [contentType, setContentType] = useState(EContentType.TEXT);
   const user = useAppStore((state) => state.user);
   const { isTyping, handleInput } = useEmitTyping();
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  const inputMsgRef = useRef<HTMLTextAreaElement | null>(null);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!message || !channel) return;
+    if (!content || !channel) return;
 
     const dateNow: Date = DateTime.now().setZone("Asia/Manila").toJSDate();
     const newMessage: TMessages = {
@@ -22,8 +28,8 @@ export default function InputField() {
       messageId: uuid(),
       senderId: user.userId,
       sendAt: dateNow,
-      content: message,
-      contentType: "text",
+      content: content,
+      contentType: contentType,
     };
     setIsLoading(true);
     asycnEmit("sent_new_message", {
@@ -33,7 +39,7 @@ export default function InputField() {
       channelName: channel.channelName,
     })
       .then(() => {
-        setMessage("");
+        setContent("");
         setIsLoading(false);
       })
       .catch(() => {
@@ -42,53 +48,59 @@ export default function InputField() {
   };
 
   useEffect(() => {
-    inputRef?.current?.focus();
+    inputMsgRef?.current?.focus();
   }, [channel?.channelId]);
 
   return (
-    <div className="w-full min-h-16 max-h-36 px-2 py-1 flex justify-center relative">
+    <div className="w-full h-16 border rounded-md p-1 flex items-center justify-between gap-2 md:gap-5">
       {isTyping ? <Typing /> : null}
       <form
         onSubmit={handleSubmit}
-        className="w-full h-fit border flex items-center  gap-2 px-1  rounded-lg py-1"
+        className="h-full flex-1 relative bg-secondary rounded-md flex px-2 py-1 gap-2 items-center"
       >
         <textarea
-          ref={inputRef}
-          placeholder="Message..."
-          value={message || ""}
+          placeholder="Text..."
+          ref={inputMsgRef}
+          value={typeof content === "object" ? "" : content}
           onChange={(e) => {
-            setMessage(e.target.value);
+            setContentType(EContentType.TEXT);
+            setContent(e.target.value);
             handleInput();
           }}
-          className="flex-1  h-fit min-h-12 max-h-full bg-secondary/70 rounded-lg resize-none outline-none  px-2  py-3 text-sm "
+          className="resize-none h-full w-full text-sm outline-none py-2 bg-transparent"
         />
-        <button
-          type="submit"
-          title="Send"
-          disabled={isLoading}
-          className={`bg-primary sendBtn rounded-full !flex !items-center transition-all justify-center ${
-            isLoading ? "sending" : ""
-          }`}
-        >
-          <div className="svg-wrapper-1">
-            <div className="svg-wrapper">
-              <svg
-                height="24"
-                width="24"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M0 0h24v24H0z" fill="none"></path>
-                <path
-                  d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </div>
-          </div>
-          <span>Send</span>
-        </button>
+        <ImageInput
+          content={content}
+          setContent={setContent}
+          setContentType={setContentType}
+        />
       </form>
+      <button
+        type="submit"
+        title="Send"
+        disabled={isLoading}
+        className={`bg-primary sendBtn rounded-full !flex !items-center transition-all justify-center ${
+          isLoading ? "sending" : ""
+        }`}
+      >
+        <div className="svg-wrapper-1">
+          <div className="svg-wrapper">
+            <svg
+              height="24"
+              width="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M0 0h24v24H0z" fill="none"></path>
+              <path
+                d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <span>Send</span>
+      </button>
     </div>
   );
 }

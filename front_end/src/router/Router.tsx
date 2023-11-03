@@ -43,8 +43,8 @@ const Router = () => {
           <Route path="/register" element={<Register />} />
           <Route element={<Persist />}>
             <Route element={<ProtectedRoutes />}>
-              <Route path="/chat" element={<MainContainer />}>
-                <Route path="/chat/:channelId" element={<ChatBox />} />
+              <Route path="/chat/c/" element={<MainContainer />}>
+                <Route path="/chat/c/:channelId" element={<ChatBox />} />
               </Route>
             </Route>
           </Route>

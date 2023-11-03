@@ -41,9 +41,9 @@ export default function UsersCard({ user }: Props) {
         .then((res) => {
           if (res?.data) {
             const resData = res.data;
-            navigate(`/chat/${resData.channelId}`);
+            navigate(`/chat/c/${resData.channelId}`);
           } else {
-            navigate(`/chat/${uuid()}`);
+            navigate(`/chat/c/${uuid()}`);
           }
           seTMembers(members);
         })

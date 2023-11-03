@@ -150,10 +150,10 @@ const RegisterForm = () => {
               value={formik.values.userName || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full h-10 outline-none pl-2 pr-10   text-sm  bg-transparent  border rounded-lg border-border ${
+              className={`w-full h-10 outline-none pl-2 pr-10   text-sm  bg-transparent  border rounded-lg  ${
                 formik.touched.userName && formik.errors.userName
                   ? "border-destructive"
-                  : "border-foreground"
+                  : "border-border"
               } `}
             />
             <p className="absolute right-0 -bottom-5 text-xs text-destructive">
@@ -173,10 +173,10 @@ const RegisterForm = () => {
               value={formik.values.email || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full h-10 outline-none pl-2 pr-10   text-sm  bg-transparent  border rounded-lg border-border   ${
+              className={`w-full h-10 outline-none pl-2 pr-10   text-sm  bg-transparent  border rounded-lg    ${
                 formik.touched.email && formik.errors.email
                   ? "border-destructive"
-                  : "border-foreground"
+                  : "border-border"
               }  `}
             />
             <p className="absolute right-0 -bottom-5 text-xs text-destructive">
@@ -196,10 +196,10 @@ const RegisterForm = () => {
               value={formik.values.password || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full h-10 outline-none pl-2 pr-10   text-sm  bg-transparent  border rounded-lg border-border ${
+              className={`w-full h-10 outline-none pl-2 pr-10   text-sm  bg-transparent  border rounded-lg  ${
                 formik.touched.password && formik.errors.password
                   ? "border-destructive"
-                  : "border-foreground"
+                  : "border-border"
               } `}
             />
             <p className="absolute right-0 -bottom-5 text-xs text-destructive">
@@ -219,10 +219,10 @@ const RegisterForm = () => {
               value={formik.values.confirmpass || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full h-10 outline-none pl-2 pr-10   text-sm bg-transparent border rounded-lg border-border ${
+              className={`w-full h-10 outline-none pl-2 pr-10   text-sm bg-transparent border rounded-lg  ${
                 formik.touched.confirmpass && formik.errors.confirmpass
                   ? "border-destructive"
-                  : "border-foreground"
+                  : "border-border"
               } `}
             />
             <p className="absolute right-0 -bottom-5 text-xs text-destructive">

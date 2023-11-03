@@ -14,32 +14,33 @@ export default function useGenerateChannel() {
   const { channelId } = useParams();
   const members = useAppStore((state) => state.members);
   useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      customAxios.get(`/channel/${channelId}`).then((res) => {
-          if (res?.data) {
-            setChannel(res.data);
-          } else {
-            setChannel({
-              channelId: channelId!,
-              members: members,
-              isGroup: false,
-              channelName: "",
-            });
-          }
-        })
-        .catch(() => {
+    if (!channelId) return;
+    setIsLoading(true);
+    customAxios
+      .get(`/channel/${channelId}`)
+      .then((res) => {
+        if (res?.data) {
+          setChannel(res.data);
+        } else {
           setChannel({
             channelId: channelId!,
             members: members,
-            isGroup: channel.isGroup,
+            isGroup: false,
             channelName: "",
           });
-        })
-        .finally(() => {
-          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        setChannel({
+          channelId: channelId!,
+          members: members,
+          isGroup: channel.isGroup,
+          channelName: "",
         });
-    })();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [channelId, members]);
   return { channel, isLoading };
 }

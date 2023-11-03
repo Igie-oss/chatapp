@@ -13,6 +13,7 @@ export default function MessagesBox() {
   const scrollRef = useRef<HTMLUListElement | null>(null);
 
   useEffect(() => {
+    if (!channelId) return;
     setIsLoading(true);
     customAxios
       .get(`/channel/channelmessage/${channelId}`)
@@ -55,7 +56,7 @@ export default function MessagesBox() {
   return (
     <ul
       ref={scrollRef}
-      className="w-full h-[81%] overflow-y-auto overflow-x-auto p-2 py-10 flex flex-col items-center gap-2 relative"
+      className="w-full h-[82%] overflow-y-auto overflow-x-auto p-2 py-10 flex flex-col items-center gap-2 relative"
     >
       {isLoading ? (
         <MessageLoader />
