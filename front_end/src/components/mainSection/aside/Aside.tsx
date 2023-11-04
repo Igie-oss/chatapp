@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import ChannelListContainer from "./channelsComponents/ChannelListContainer";
 import UserListContainer from "./usersComponents/UserListContainer";
 import Navigation from "./Navigation";
-
+import GroupChannelListContainer from "./groupChannelComponents/GroupChannelListContainer";
 export enum ENavigation {
   IS_CHANNEL_LIST = "is_channel_list",
   IS_USER_LIST = "is_user_list",
@@ -43,6 +43,8 @@ export default function Aside() {
           <ChannelListContainer />
         ) : navigate.isShow === ENavigation.IS_USER_LIST ? (
           <UserListContainer />
+        ) : navigate.isShow === ENavigation.IS_GROUP_LIST ? (
+          <GroupChannelListContainer />
         ) : null}
       </main>
     </aside>

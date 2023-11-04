@@ -4,11 +4,11 @@ export default function useGetChannelInfo(channelId: string) {
   const [channel, setChannel] = useState<TChannel>();
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    if (!channelId) return;
     (() => {
-      if (channel?.channelId) return;
       setIsLoading(true);
       customAxios
-        .get(`channel/${channelId}`)
+        .get(`/channel/${channelId}`)
         .then((res) => {
           if (res?.data) {
             setChannel(res.data);

@@ -1,5 +1,6 @@
 import prisma from "../../lib/prisma.js";
-const sendNewMessage = ({ message, members, isGroup }) => {
+import { dateNow } from "../../lib/formatDate.js";
+const sendNewMessage = ({ message, members, isGroup, groupName }) => {
   return new Promise(async (resolve, reject) => {
     if (!message.channelId || !message.content) {
       return resolve({ message: "All field are required!" });
@@ -14,16 +15,29 @@ const sendNewMessage = ({ message, members, isGroup }) => {
         where: { channelId: message.channelId },
       });
 
+      let channelId;
+
       if (!foundChannel?.channelId) {
-        await prisma.channel.create({
+        const createChannel = await prisma.channel.create({
           data: {
             channelId: message.channelId,
             isGroup: isGroup,
+            groupName: groupName,
             members: members,
+            createdAt: dateNow(),
           },
         });
+        channelId = createChannel?.channelId;
+      } else {
+        channelId = foundChannel?.channelId;
       }
-      const createMessage = await prisma.messages.create({ data: message });
+
+      const createMessage = await prisma.messages.create({
+        data: {
+          ...message,
+          channelId: channelId,
+        },
+      });
 
       return resolve({ data: { ...createMessage, members: members } });
     } catch (error) {

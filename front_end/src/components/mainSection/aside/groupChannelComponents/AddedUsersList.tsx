@@ -29,13 +29,15 @@ export default function AddedUsersList({
                   </p>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => handleRemoveUser(u.userId)}
-                  className="text-sm text-primary font-semibold hover:text-destructive"
-                >
-                  Remove
-                </button>
+                {userId === u.userId ? null : (
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveUser(u.userId)}
+                    className="text-sm text-primary font-semibold hover:text-destructive"
+                  >
+                    Remove
+                  </button>
+                )}
               </li>
             );
           })}

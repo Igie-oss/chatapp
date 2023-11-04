@@ -1,6 +1,10 @@
 import { useState } from "react";
 import UserSearchList from "./UserSearchList";
-export default function Header() {
+type Props = {
+  groupMembers:TMembers[]
+  handleAddUser: (member: TMembers) => void;
+};
+export default function Header({groupMembers, handleAddUser }: Props) {
   const [searchText, setSearchText] = useState("");
   return (
     <header className="w-full  flex flex-col items-center gap-5 relative">
@@ -16,7 +20,7 @@ export default function Header() {
           className="h-10 w-[80%] px-4 text-sm border rounded-md outline-none focus:bg-secondary/50 bg-transparent"
         />
       </div>
-      {searchText ? <UserSearchList /> : null}
+      {searchText ? <UserSearchList groupMembers={groupMembers} handleAddUser={handleAddUser} /> : null}
     </header>
   );
 }

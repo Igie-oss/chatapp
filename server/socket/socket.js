@@ -44,25 +44,28 @@ const socketConnection = (httpServer) => {
       socket.join(channelId);
     });
 
-    socket.on("sent_new_message", ({ message, members, isGroup }) => {
-      sendNewMessage({ message, members, isGroup })
-        .then((res) => {
-          if (res?.data) {
-            members.forEach((m) => {
-              io.to(m.userId).emit("new_channel", {
-                data: res.data,
+    socket.on(
+      "sent_new_message",
+      ({ message, members, isGroup, groupName }) => {
+        sendNewMessage({ message, members, isGroup, groupName })
+          .then((res) => {
+            if (res?.data) {
+              members.forEach((m) => {
+                io.to(m.userId).emit("new_channel", {
+                  data: { ...res.data, isGroup: isGroup, groupName: groupName },
+                });
               });
-            });
-            io.to(message.channelId).emit("new_message", {
-              data: res.data,
-            });
-          }
-          io.emit("sent_new_message", { message: "Sent" });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+              io.to(message.channelId).emit("new_message", {
+                data: { ...res.data, isGroup: isGroup, groupName: groupName },
+              });
+            }
+            io.emit("sent_new_message", { message: "Sent" });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    );
 
     socket.on("client_start_typing", (channelId) => {
       socket.to(channelId).emit("server_start_typing", {
@@ -76,6 +79,13 @@ const socketConnection = (httpServer) => {
       });
     });
 
+    socket.on("client_new_group_channel", (data) => {
+      data?.members.forEach((member) => {
+        io.to(member.userId).emit("new_channel", {
+          data: data,
+        });
+      });
+    });
     socket.on("disconnect", () => {
       console.log("Socket disconnect");
     });

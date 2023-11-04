@@ -12,7 +12,7 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import CreateGroup from "../groupChatComponents/CreateGroup";
+import CreateGroup from "../groupChannelComponents/CreateGroup";
 type Props = {
   user: TUser;
 };
@@ -28,16 +28,16 @@ export default function UsersCard({ user }: Props) {
         {
           userId: currentUser.userId,
           userName: currentUser.userName,
+          isAdmin: true,
         },
         {
           userId: user.userId,
           userName: user.userName,
+          isAdmin: false,
         },
       ];
-      customAxios("channel/getchannelbymembers", {
-        method: "POST",
-        data: members,
-      })
+      customAxios
+        .post("channel/getchannelbymembers", { data: members })
         .then((res) => {
           if (res?.data) {
             const resData = res.data;
@@ -49,7 +49,7 @@ export default function UsersCard({ user }: Props) {
         })
         .catch((err) => {
           if (err) {
-            navigate(`/chat/${uuid()}`);
+            navigate(`/chat/c/${uuid()}`);
             seTMembers(members);
           }
         });
@@ -58,7 +58,7 @@ export default function UsersCard({ user }: Props) {
 
   return (
     <li
-      className={`cursor-pointer hover:bg-secondary p-2 group w-full border border-border rounded-md flex items-center ${
+      className={`cursor-pointer hover:bg-secondary p-2 group w-full border border-border rounded-md flex items-center justify-between ${
         members.find(({ userId }) => userId === user.userId)
           ? "bg-secondary"
           : ""
@@ -66,7 +66,7 @@ export default function UsersCard({ user }: Props) {
     >
       <div
         onClick={handleClick}
-        className="h-full w-[85%] flex items-center gap-4"
+        className="h-full w-[90%] flex items-center gap-4"
       >
         <div className="w-8 h-8 flex items-start">
           <UserAvatar id={user.userId} />
@@ -76,7 +76,7 @@ export default function UsersCard({ user }: Props) {
           {user.userName}
         </h1>
       </div>
-      <div className="flex-1 h-full ">
+      <div className="flex-1 h-full">
         <Popover>
           <PopoverTrigger
             title="More"
@@ -95,7 +95,7 @@ export default function UsersCard({ user }: Props) {
                 </button>
               </DialogTrigger>
               <DialogContent>
-                <CreateGroup user={user} />
+                <CreateGroup user={{userId:user.userId, userName: user.userName, isAdmin: false }} />
               </DialogContent>
             </Dialog>
           </PopoverContent>

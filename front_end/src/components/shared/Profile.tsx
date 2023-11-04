@@ -13,7 +13,7 @@ export default function Profile() {
       <Popover>
         <PopoverTrigger title="Profile">
           <div className="w-9 h-9">
-            <UserAvatar userId={userId} />
+            <UserAvatar id={userId} />
           </div>
         </PopoverTrigger>
         <PopoverContent className=" flex flex-col gap-4 mr-2 md:mr-12 lg:mr-16">
@@ -22,7 +22,7 @@ export default function Profile() {
           </h1>
           <div className="w-full flex gap-1 items-end">
             <div className="w-9 h-9">
-              <UserAvatar userId={userId} />
+              <UserAvatar id={userId} />
             </div>
             <h1 className="mb-1 ml-2 text-sm font-semibold opacity-75">
               {userName}

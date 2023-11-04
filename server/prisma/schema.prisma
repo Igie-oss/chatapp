@@ -22,6 +22,7 @@ model Users {
 type Member {
   userId   String
   userName String
+  isAdmin  Boolean @default(false)
 }
 
 model Channel {
@@ -29,7 +30,8 @@ model Channel {
   channelId String   @unique
   isGroup   Boolean  @default(false)
   members   Member[]
-  channelName String?
+  groupName String?
+  createdAt DateTime
 }
 
 model Messages {

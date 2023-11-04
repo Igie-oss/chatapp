@@ -8,7 +8,7 @@ export default function useGenerateChannel() {
     channelId: "",
     isGroup: false,
     members: [],
-    channelName: "",
+    groupName: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const { channelId } = useParams();
@@ -26,7 +26,7 @@ export default function useGenerateChannel() {
             channelId: channelId!,
             members: members,
             isGroup: false,
-            channelName: "",
+            groupName: "",
           });
         }
       })
@@ -35,7 +35,7 @@ export default function useGenerateChannel() {
           channelId: channelId!,
           members: members,
           isGroup: channel.isGroup,
-          channelName: "",
+          groupName: "",
         });
       })
       .finally(() => {

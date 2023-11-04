@@ -1,30 +1,29 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { socket } from "@/socket";
 import { useEffect } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import UserAvatar from "@/components/shared/UserAvatar";
-import useGetChannelInfo from "@/hooks/useGetChannelInfo";
 import { useAppStore } from "@/features/store";
 import Skeleton from "@/components/shared/Skeleton";
+import useGenerateChannel from "@/hooks/useGenerateChannel";
 type Props = {
   toggelAside: () => void;
 };
 export default function Header({ toggelAside }: Props) {
-  const { channelId } = useParams();
   const userId = useAppStore((state) => state.user.userId);
-  const { channel, isLoading } = useGetChannelInfo(channelId!);
+  const { channel, isLoading } = useGenerateChannel();
   useEffect(() => {
-    if (!channelId) return;
-    socket.emit("join-channel", channelId);
+    if (!channel.channelId) return;
+    socket.emit("join-channel", channel.channelId);
     return () => {
       socket.off("join-channel");
     };
-  }, [channelId]);
+  }, [channel.channelId]);
 
   return (
     <header className="w-full flex-1 bg-secondary/40 flex items-center rounded-md justify-between shadow-sm  px-2 lg:px-4 ">
-      {channelId ? (
+      {channel.channelId ? (
         <>
           <div className="flex gap-4 items-center">
             <Link
@@ -54,7 +53,7 @@ export default function Header({ toggelAside }: Props) {
               ) : (
                 <h1 className="mb-1 ml-2 text-sm font-semibold">
                   {channel?.isGroup
-                    ? channel.channelName
+                    ? channel.groupName
                     : channel?.members?.find((u) => u.userId !== userId)
                         ?.userName!}
                 </h1>

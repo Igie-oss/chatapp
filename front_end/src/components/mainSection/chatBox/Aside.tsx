@@ -1,16 +1,14 @@
 import { MdArrowBackIosNew } from "react-icons/md";
 import UserAvatar from "@/components/shared/UserAvatar";
-import useGetChannelInfo from "@/hooks/useGetChannelInfo";
-import { useParams } from "react-router-dom";
 import { useAppStore } from "@/features/store";
 import Skeleton from "@/components/shared/Skeleton";
+import useGenerateChannel from "@/hooks/useGenerateChannel";
 type Props = {
   toggelAside: () => void;
 };
 export default function Aside({ toggelAside }: Props) {
-  const { channelId } = useParams();
   const userId = useAppStore((state) => state.user.userId);
-  const { channel, isLoading } = useGetChannelInfo(channelId!);
+  const { channel, isLoading } = useGenerateChannel();
 
   return (
     <>
@@ -24,8 +22,8 @@ export default function Aside({ toggelAside }: Props) {
           <MdArrowBackIosNew className="w-6 h-6 pointer-events-none" />
         </button>
       </header>
-      <div className="w-[95%] h-40 py-4 flex flex-col items-center justify-between border border-border bg-secondary/40 rounded-md">
-        <div className="h-24 w-24 rounded-full overflow-hidden">
+      <div className="w-[95%] h-40 py-4 flex flex-col items-center gap-2 justify-between border border-border bg-secondary/40 rounded-md">
+        <div className="h-20 w-20 rounded-full overflow-hidden">
           {isLoading ? (
             <Skeleton />
           ) : (
@@ -43,9 +41,9 @@ export default function Aside({ toggelAside }: Props) {
             <Skeleton />
           </div>
         ) : (
-          <h2 className="font-semibold text-base">
+          <h2 className="font-semibold text-base px-2 py-1 border bg-secondary rounded-md">
             {channel?.isGroup
-              ? channel.channelName
+              ? channel.groupName
               : channel?.members?.find((u) => u.userId !== userId)?.userName!}
           </h2>
         )}

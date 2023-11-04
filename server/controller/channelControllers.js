@@ -1,6 +1,7 @@
 import prisma from "../lib/prisma.js";
 import asycnHandler from "express-async-handler";
-import { formatDate } from "../lib/formatDate.js";
+import { formatDate, dateNow } from "../lib/formatDate.js";
+import { v4 as uuid } from "uuid";
 const getUserChannels = asycnHandler(async (req, res) => {
   const userId = req.params.userId;
   try {
@@ -15,7 +16,6 @@ const getUserChannels = asycnHandler(async (req, res) => {
     if (!foundChannels?.length) {
       return res.status(404).json({ message: "No channel found!" });
     }
-
     const messagesData = async () => {
       const channelLatestContent = [];
 
@@ -29,12 +29,13 @@ const getUserChannels = asycnHandler(async (req, res) => {
         const getChannel = await prisma.channel.findUnique({
           where: { channelId: foundChannels[i].channelId },
         });
+
         if (latestMessage?.id) {
           channelLatestContent.push({
             ...latestMessage,
             members: getChannel?.members,
             isGroup: getChannel?.isGroup,
-            channelName: getChannel?.channelName,
+            groupName: getChannel?.groupName,
           });
         }
       }
@@ -60,6 +61,7 @@ const getChannel = asycnHandler(async (req, res) => {
         channelId,
       },
     });
+
     if (!foundChanel?.channelId) {
       return res.status(404).json({ message: "No channel found" });
     }
@@ -91,7 +93,7 @@ const getChannelMessages = asycnHandler(async (req, res) => {
 });
 
 const getChannelByMembers = asycnHandler(async (req, res) => {
-  const members = req.body;
+  const members = req.body?.data;
   if (!members.length) {
     return res.status(400).json({ message: "Chat mates required!" });
   }
@@ -115,4 +117,61 @@ const getChannelByMembers = asycnHandler(async (req, res) => {
   }
 });
 
-export { getUserChannels, getChannel, getChannelMessages, getChannelByMembers };
+const createGroup = asycnHandler(async (req, res) => {
+  const data = req.body?.data;
+  if (data?.members?.length <= 1 || !data?.groupName) {
+    return res
+      .status(400)
+      .json({ message: "Group members must have members!" });
+  }
+
+  try {
+    const createGroupChannel = await prisma.channel.create({
+      data: {
+        channelId: uuid(),
+        isGroup: true,
+        members: data.members,
+        groupName: data.groupName,
+        createdAt: dateNow(),
+      },
+    });
+    return res.status(201).json(createGroupChannel);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Something went wrong!" });
+  }
+});
+
+const getUserGroupChannel = asycnHandler(async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const foundGroupChannel = await prisma.channel.findMany({
+      where: {
+        members: {
+          some: { userId },
+        },
+        isGroup: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    if (!foundGroupChannel?.length) {
+      return res.status(404).json({ message: "No channel found" });
+    }
+
+    return res.status(200).json(foundGroupChannel);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Something went wrong!" });
+  }
+});
+export {
+  getUserChannels,
+  getChannel,
+  getChannelMessages,
+  getChannelByMembers,
+  createGroup,
+  getUserGroupChannel,
+};

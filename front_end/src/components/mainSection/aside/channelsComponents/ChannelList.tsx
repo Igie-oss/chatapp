@@ -12,6 +12,7 @@ function ChannelList({ searchText }: Props) {
     channels,
     searchText,
   });
+  console.log(filteredChannels)
   return (
     <ul className="w-full flex-1 flex flex-col gap-1 overflow-y-auto">
       {isLoading ? (
@@ -35,12 +36,12 @@ function ChannelList({ searchText }: Props) {
 }
 
 const SkeletonUI = () => {
-  const count = [];
+  const arr = [];
   for (let i = 0; i < 6; i++) {
-    count.push(i);
+    arr.push(i);
   }
 
-  return count.map((c) => {
+  return arr.map((c) => {
     return (
       <div
         key={Math.random() + c}

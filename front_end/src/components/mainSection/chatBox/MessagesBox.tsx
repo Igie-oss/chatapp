@@ -75,10 +75,10 @@ export default function MessagesBox() {
 }
 
 const MessageLoader = () => {
-  const count = [];
+  const arr = [];
 
   for (let i = 0; i < 9; i++) {
-    count.push(i);
+    arr.push(i);
   }
 
   return (
@@ -110,15 +110,15 @@ const MessageLoader = () => {
           <Skeleton />
         </div>
       </div>
-      {count.map((c) => {
+      {arr.map((a) => {
         return (
           <div
-            key={c}
+            key={a}
             className={`w-full  flex items-center px-2 gap-2 ${
-              c % 2 !== 0 ? "flex-row-reverse" : ""
+              a % 2 !== 0 ? "flex-row-reverse" : ""
             }`}
           >
-            {c % 2 === 0 ? (
+            {a % 2 === 0 ? (
               <div className="h-10 w-10 rounded-full overflow-hidden">
                 <Skeleton />
               </div>

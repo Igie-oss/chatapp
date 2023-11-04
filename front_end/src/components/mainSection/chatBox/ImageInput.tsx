@@ -51,7 +51,7 @@ export default function ImageInput({
           title="add image"
           type="button"
           onClick={() => inputImgRef?.current?.click()}
-          className="p-1 absolute right-1 top-[0.40rem]"
+          className="p-1 absolute right-1 top-[0.20rem]"
         >
           <BsImage className="w-8 h-8 pointer-events-none text-primary" />
         </button>

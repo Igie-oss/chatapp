@@ -29,14 +29,14 @@ function UsersList({ searchText }: Props) {
 }
 
 const SkeletonUI = () => {
-  const count = [];
+  const arr = [];
   for (let i = 0; i < 6; i++) {
-    count.push(i);
+    arr.push(i);
   }
-  return count.map((c) => {
+  return arr.map((a) => {
     return (
       <li
-        key={Math.random() + c}
+        key={Math.random() + a}
         className="h-12 p-2 w-full rounded-md flex gap-1 pointer-events-none"
       >
         <div className="h-full w-[85%] flex items-end gap-1">

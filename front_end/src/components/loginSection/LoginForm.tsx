@@ -45,7 +45,7 @@ const LoginForm = () => {
             if (user) {
               setUser(user);
             }
-            navigate("/chat");
+            navigate("/chat/c/");
           }
         })
         .catch((error) => {

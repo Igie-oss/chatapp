@@ -22,7 +22,7 @@ export default function RedirectComponent({ children }: Props) {
   }, []);
 
   if (isRedirect) {
-    navigate("/chat");
+    navigate("/chat/c/");
   }
   return <>{children}</>;
 }

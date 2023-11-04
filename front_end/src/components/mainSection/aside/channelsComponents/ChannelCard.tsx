@@ -11,7 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import CreateGroup from "../groupChatComponents/CreateGroup";
+import CreateGroup from "../groupChannelComponents/CreateGroup";
 
 type Props = {
   message: TChannelMessages;
@@ -32,22 +32,22 @@ function ChannelCard({ message }: Props) {
     <li
       style={{
         backgroundColor: `${
-          channelId === message.channelId
+          channelId === message?.channelId
             ? "hsl(var(--secondary))"
             : "transparent"
         }`,
       }}
-      className="group border border-secondary hover:bg-secondary p-2 w-full h-fit hover:shadow-md rounded-md flex gap-1 cursor-pointer"
+      className="group border border-secondary hover:bg-secondary p-2 w-full h-fit hover:shadow-md rounded-md flex justify-between gap-1 cursor-pointer"
     >
       <div
         onClick={handleClick}
-        className="h-full w-[85%] flex items-start gap-3"
+        className="h-full w-[90%] flex items-start gap-3"
       >
         <div className="w-10 h-10 rounded-full overflow-hidden">
           <UserAvatar
             id={
               message?.isGroup
-                ? message.channelId
+                ? message?.channelId
                 : message?.members?.find((u) => u.userId !== userId)?.userId!
             }
           />
@@ -55,19 +55,25 @@ function ChannelCard({ message }: Props) {
         <div className="flex-1 h-full flex flex-col justify-end gap-1">
           <h1 className="font-semibold text-sm pointer-events-none">
             {message?.isGroup
-              ? message.channelName
+              ? message?.groupName
               : message?.members?.find((u) => u.userId !== userId)?.userName!}
           </h1>
 
           <div className="w-full flex items-end gap-2">
             {/* //!Make check base on contenttyope for defferent ui of content */}
-            <h5 className="text-xs font-medium opacity-70 pointer-events-none">
-              {message.senderId === userId ? "You: " : ""}
-              {message.content?.slice(0, 10)}
-            </h5>
-            <p className="text-[10px]  opacity-50 pointer-events-none">
-              <DisplayDate date={message.sendAt!} />
-            </p>
+            {message.content ? (
+              <h5 className="text-xs font-medium opacity-70 pointer-events-none">
+                {message?.senderId === userId ? "You: " : ""}
+                {message?.content.slice(0, 10)}
+              </h5>
+            ) : (
+              <span className="h-4" />
+            )}
+            {message?.sendAt ? (
+              <p className="text-[10px]  opacity-50 pointer-events-none">
+                <DisplayDate date={message.sendAt} />
+              </p>
+            ) : null}
           </div>
         </div>
       </div>
@@ -81,14 +87,17 @@ function ChannelCard({ message }: Props) {
           </PopoverTrigger>
           <PopoverContent className="px-1 flex flex-col gap-2 absolute -right-5">
             <Dialog>
-              <DialogTrigger asChild>
-                <button
-                  type="button"
-                  className="w-full h-10 flex items-center gap-4 text-start px-2 rounded-md hover:bg-secondary/50 text-sm"
-                >
-                  <HiOutlineUserGroup className="w-5 h-5" /> <p>Create group</p>
-                </button>
-              </DialogTrigger>
+              {message?.isGroup ? null : (
+                <DialogTrigger asChild>
+                  <button
+                    type="button"
+                    className="w-full h-10 flex items-center gap-4 text-start px-2 rounded-md hover:bg-secondary/50 text-sm"
+                  >
+                    <HiOutlineUserGroup className="w-5 h-5" />{" "}
+                    <p>Create group</p>
+                  </button>
+                </DialogTrigger>
+              )}
               <DialogContent>
                 <CreateGroup
                   user={message?.members?.find((u) => u.userId !== userId)!}

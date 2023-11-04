@@ -8,10 +8,10 @@ export default function useIsAllowed() {
   const { channelId } = useParams();
   const chatMates = useAppStore((state) => state.members);
   useEffect(() => {
-    const filtered = chatMates.filter((cuser) => cuser.id === user.id);
+    const filtered = chatMates.filter((cuser) => cuser.userId === user.userId);
     if (channelId && filtered) {
       setIsAllowed(!!channelId && !!filtered.length);
     }
-  }, [channelId, chatMates[0].id]);
+  }, [channelId, chatMates[0].userId]);
   return isAllowed;
 }

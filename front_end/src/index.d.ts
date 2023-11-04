@@ -26,6 +26,7 @@ type TUser = {
 type TMembers = {
   userId: string;
   userName: string;
+  isAdmin: boolean;
 };
 
 type TChannel = {
@@ -33,7 +34,7 @@ type TChannel = {
   channelId: string;
   isGroup: boolean;
   members: TMembers[];
-  channelName: string;
+  groupName: string;
 };
 
 enum EContentType {
@@ -53,5 +54,5 @@ type TMessages = {
 type TChannelMessages = TMessages & {
   members: TMembers[];
   isGroup: boolean;
-  channelName: string | null;
+  groupName: string | null;
 };

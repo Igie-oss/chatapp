@@ -4,7 +4,9 @@ import {
   getUserChannels,
   getChannel,
   getChannelMessages,
-  getChannelByMembers
+  getChannelByMembers,
+  createGroup,
+  getUserGroupChannel,
 } from "../controller/channelControllers.js";
 const router = express.Router();
 router.use(verifyJWT);
@@ -16,5 +18,9 @@ router.route("/:channelId").get(getChannel);
 router.route("/channelmessage/:channelId").get(getChannelMessages);
 
 router.route("/getchannelbymembers").post(getChannelByMembers);
+
+router.route("/creatgroup").post(createGroup);
+
+router.route("/groupchannel/:userId").get(getUserGroupChannel);
 
 export default router;

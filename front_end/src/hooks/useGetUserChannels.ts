@@ -3,7 +3,6 @@ import { useAppStore } from "@/features/store";
 import { customAxios } from "@/lib/helper";
 import { socket } from "@/socket";
 
-
 export default function useGetUserChannels() {
   const [channels, setChannels] = useState<TChannelMessages[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +31,7 @@ export default function useGetUserChannels() {
     socket.on("new_channel", (res) => {
       if (res?.data) {
         const data = res.data;
+        console.log(data);
         const filtered = channels.filter((channel) => {
           return channel.channelId !== data?.channelId;
         });
