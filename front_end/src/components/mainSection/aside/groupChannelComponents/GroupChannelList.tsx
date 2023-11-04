@@ -2,15 +2,24 @@ import { useAppStore } from "@/features/store";
 import useGetUserGroupChannel from "@/hooks/useGetUserGroupChannel";
 import Skeleton from "@/components/shared/Skeleton";
 import GroupCard from "./GroupCard";
-export default function GroupChannelList() {
+import useSearchGroupChannel from "@/hooks/useSearchGroupChannel";
+type Props = {
+  searchText: string;
+};
+export default function GroupChannelList({ searchText }: Props) {
   const { userId } = useAppStore((state) => state.user);
   const { groupChannels, isLoading } = useGetUserGroupChannel(userId);
+  const filteredChannel = useSearchGroupChannel({
+    channels: groupChannels,
+    searchText,
+  });
+
   return (
     <ul className="w-full flex-1 flex flex-col gap-1 py-5 overflow-y-auto">
       {isLoading ? (
         <LoaderSkeletons />
-      ) : groupChannels?.length ? (
-        groupChannels?.map((channel) => {
+      ) : filteredChannel?.length ? (
+        filteredChannel?.map((channel) => {
           return <GroupCard key={channel.channelId} channel={channel} />;
         })
       ) : null}

@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useDeferredValue } from "react";
 import UserSearchList from "./UserSearchList";
 type Props = {
-  groupMembers:TMembers[]
+  groupMembers: TMembers[];
   handleAddUser: (member: TMembers) => void;
 };
-export default function Header({groupMembers, handleAddUser }: Props) {
+export default function Header({ groupMembers, handleAddUser }: Props) {
   const [searchText, setSearchText] = useState("");
+  const deferredText = useDeferredValue(searchText);
   return (
     <header className="w-full  flex flex-col items-center gap-5 relative">
       <h2 className="text-lg font-semibold py-2 px-4 border border-border rounded-md bg-secondary/50">
@@ -20,7 +21,13 @@ export default function Header({groupMembers, handleAddUser }: Props) {
           className="h-10 w-[80%] px-4 text-sm border rounded-md outline-none focus:bg-secondary/50 bg-transparent"
         />
       </div>
-      {searchText ? <UserSearchList groupMembers={groupMembers} handleAddUser={handleAddUser} /> : null}
+      {searchText ? (
+        <UserSearchList
+          searchText={deferredText}
+          groupMembers={groupMembers}
+          handleAddUser={handleAddUser}
+        />
+      ) : null}
     </header>
   );
 }

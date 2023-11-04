@@ -3,18 +3,24 @@ import UserAvatar from "@/components/shared/UserAvatar";
 import { useAppStore } from "@/features/store";
 import Skeleton from "@/components/shared/Skeleton";
 import { useEffect, useState } from "react";
+import useFilterUsers from "@/hooks/useFilterUsers";
 
 type Props = {
+  searchText: string;
   groupMembers: TMembers[];
   handleAddUser: (member: TMembers) => void;
 };
 
-export default function UserSearchList({ groupMembers, handleAddUser }: Props) {
+export default function UserSearchList({
+  searchText,
+  groupMembers,
+  handleAddUser,
+}: Props) {
   const { users, isLoading } = useGetUsers();
   const [initalUsers, setInitialUsers] = useState<TUser[]>([]);
+  const filteredUsers = useFilterUsers(initalUsers, searchText);
   const userId = useAppStore((state) => state.user.userId);
 
-  
   useEffect(() => {
     if (users?.length) {
       setInitialUsers(
@@ -38,8 +44,8 @@ export default function UserSearchList({ groupMembers, handleAddUser }: Props) {
     <ul className="w-full h-72 flex flex-col gap-1 p-2 border absolute left-0 z-10 top-full overflow-y-auto rounded-md bg-background">
       {isLoading ? (
         <LoaderSkeleton />
-      ) : initalUsers?.length ? (
-        initalUsers.map((user) => {
+      ) : filteredUsers?.length ? (
+        filteredUsers.map((user) => {
           if (user.userId === userId) return;
           return (
             <li
