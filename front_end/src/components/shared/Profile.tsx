@@ -4,8 +4,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import UserAvatar from "@/components/shared/UserAvatar";
 import SignOutBtn from "@/components/shared/SignOutBtn";
+import ImageUploader from "./ImageUploader";
 export default function Profile() {
   const { userName, userId } = useAppStore((state) => state.user);
   return (
@@ -17,7 +19,7 @@ export default function Profile() {
           </div>
         </PopoverTrigger>
         <PopoverContent className=" flex flex-col gap-4 mr-2 md:mr-12 lg:mr-16">
-          <h1 className="text-sm font-semibold p-2 border rounded-sm bg-secondary md:text-lg">
+          <h1 className="text-sm font-semibold p-2 border rounded-sm bg-secondary/50 md:text-lg">
             Profile
           </h1>
           <div className="w-full flex gap-1 items-end">
@@ -31,9 +33,14 @@ export default function Profile() {
           <div className="flex flex-col gap-1">
             <h1 className="border-b pb-1">Settings</h1>
             <div className="flex flex-col gap-2 my-2">
-              <button className="text-sm font-semibold text-start border hover:bg-secondary rounded-sm p-2">
-                <p>Change Avatar</p>
-              </button>
+              <Dialog>
+                <DialogTrigger className="text-sm font-semibold text-start border hover:bg-secondary rounded-sm p-2">
+                  <p className="text-sm font-normal">Change Avatar</p>
+                </DialogTrigger>
+                <DialogContent>
+                  <ImageUploader id={userId} />
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
           <div className="w-full flex mt-10">

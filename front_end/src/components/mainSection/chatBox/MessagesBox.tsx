@@ -15,8 +15,7 @@ export default function MessagesBox() {
   useEffect(() => {
     if (!channelId) return;
     setIsLoading(true);
-    customAxios
-      .get(`/channel/channelmessage/${channelId}`)
+    customAxios(`/channel/channelmessage/${channelId}`, { method: "GET" })
       .then((res) => {
         if (res.data?.length) {
           setMessages(res.data);

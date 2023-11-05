@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import { DialogTrigger } from "@/components/ui/dialog";
 import Header from "./Header";
 import AddedUsersList from "./AddedUsersList";
 import { useAppStore } from "@/features/store";
@@ -16,7 +16,6 @@ export default function CreateGroup({ user }: Props) {
   const { userId, userName } = useAppStore((state) => state.user);
   const [groupName, setGroupName] = useState("");
   const [status, setStatus] = useState<TFetching | null>(null);
-  const exitRef = useRef<HTMLButtonElement>(null);
   const [groupMembers, setGroupMembers] = useState<TMembers[]>([
     { ...user, isAdmin: false },
     { userId, userName, isAdmin: true },
@@ -42,8 +41,7 @@ export default function CreateGroup({ user }: Props) {
       members: groupMembers,
     };
     const dateNow: Date = DateTime.now().setZone("Asia/Manila").toJSDate();
-    customAxios
-      .post("channel/creatgroup", { data: group })
+    customAxios("channel/creatgroup", { method: "POST", data: group })
       .then((res) => {
         if (res?.data && res.status === 201) {
           const resData = res.data;
@@ -112,7 +110,6 @@ export default function CreateGroup({ user }: Props) {
       />
       <div className="w-full flex gap-4 mt-5">
         <DialogTrigger
-          ref={exitRef}
           title="Cancel"
           type="button"
           disabled={status?.status === EStatus.IS_LOADING || !!status?.message}

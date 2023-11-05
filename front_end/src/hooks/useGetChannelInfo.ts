@@ -8,7 +8,7 @@ export default function useGetChannelInfo(channelId: string) {
     (() => {
       setIsLoading(true);
       customAxios
-        .get(`/channel/${channelId}`)
+      (`/channel/${channelId}`,{method:"GET"})
         .then((res) => {
           if (res?.data) {
             setChannel(res.data);

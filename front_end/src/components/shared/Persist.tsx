@@ -13,8 +13,7 @@ const Persist = () => {
   useEffect((): any => {
     const refresher = async () => {
       setIsLoading(true);
-      await customAxios
-        .get("/auth/refresh")
+      customAxios("/auth/refresh", { method: "GET" })
         .then((response: any) => {
           if (response.data.accessToken && response.status === 200) {
             setAuthToken(response.data.accessToken);

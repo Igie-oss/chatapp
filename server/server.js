@@ -13,6 +13,7 @@ import authRoutes from "./routes/authRoutes.js";
 import registerRoutes from "./routes/registerRoutes.js";
 import channelRoutes from "./routes/channelRoutes.js";
 import usersRoutes from "./routes/usersRoutes.js";
+import  imagesRoutes from "./routes/imagesRoutes.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT;
 const app = express();
@@ -35,6 +36,8 @@ app.use("/register", registerRoutes);
 app.use("/channel", channelRoutes);
 
 app.use("/users", usersRoutes);
+
+app.use("/images", imagesRoutes)
 
 app.all("*", (req, res) => {
   res.status(404);

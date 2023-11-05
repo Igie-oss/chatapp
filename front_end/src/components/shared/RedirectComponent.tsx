@@ -9,8 +9,7 @@ export default function RedirectComponent({ children }: Props) {
   const navigate = useNavigate();
   const [isRedirect, setIsRedirect] = useState(false);
   useEffect(() => {
-    customAxios
-      .get("/auth/redirect")
+    customAxios("/auth/redirect", { method: "GET" })
       .then((res) => {
         if (res?.status === 200) {
           setIsRedirect(true);

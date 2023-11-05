@@ -12,7 +12,6 @@ function ChannelList({ searchText }: Props) {
     channels,
     searchText,
   });
-  console.log(filteredChannels)
   return (
     <ul className="w-full flex-1 flex flex-col gap-1 overflow-y-auto">
       {isLoading ? (
@@ -45,7 +44,7 @@ const SkeletonUI = () => {
     return (
       <div
         key={Math.random() + c}
-        className="border border-secondary hover:bg-secondary p-2 w-full h-20 rounded-md flex gap-1 pointer-events-none"
+        className="border border-secondary hover:bg-secondary p-2 w-full h-16 rounded-md flex gap-1 pointer-events-none"
       >
         <div className="h-full w-[85%] flex items-center">
           <div className="h-full w-12 flex items-start">

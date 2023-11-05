@@ -17,7 +17,7 @@ export default function useGenerateChannel() {
     if (!channelId) return;
     setIsLoading(true);
     customAxios
-      .get(`/channel/${channelId}`)
+    (`/channel/${channelId}`,{method:"GET"})
       .then((res) => {
         if (res?.data) {
           setChannel(res.data);

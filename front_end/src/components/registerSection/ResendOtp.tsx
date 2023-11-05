@@ -30,8 +30,10 @@ export default function ResendOtp({ email, otpId, setOtpUserData }: Props) {
     if (!otpId || disable) return;
     setErrorMsg(null);
     setIsLoading(true);
-    customAxios
-      .post("/register/rerequestotp", { data: { otpId, email } })
+    customAxios("/register/rerequestotp", {
+      method: "POST",
+      data: { otpId, email },
+    })
       .then((res) => {
         if (res?.data) {
           const newOtpId = res.data?.otpId;

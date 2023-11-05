@@ -28,16 +28,17 @@ function ChannelCard({ message }: Props) {
     seTMembers(message.members);
   };
 
+  console.log(channelId === message?.channelId)
   return (
     <li
       style={{
         backgroundColor: `${
           channelId === message?.channelId
             ? "hsl(var(--secondary))"
-            : "transparent"
+            : ""
         }`,
       }}
-      className="group border border-secondary hover:bg-secondary p-2 w-full h-fit hover:shadow-md rounded-md flex justify-between gap-1 cursor-pointer"
+      className="group p-2 w-full h-fit hover:shadow-md bg-transparent rounded-lg flex justify-between gap-1 cursor-pointer"
     >
       <div
         onClick={handleClick}
@@ -93,7 +94,7 @@ function ChannelCard({ message }: Props) {
                     type="button"
                     className="w-full h-10 flex items-center gap-4 text-start px-2 rounded-md hover:bg-secondary/50 text-sm"
                   >
-                    <HiOutlineUserGroup className="w-5 h-5" />{" "}
+                    <HiOutlineUserGroup className="w-5 h-5" />
                     <p>Create group</p>
                   </button>
                 </DialogTrigger>

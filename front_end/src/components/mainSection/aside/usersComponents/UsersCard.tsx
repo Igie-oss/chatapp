@@ -36,8 +36,10 @@ export default function UsersCard({ user }: Props) {
           isAdmin: false,
         },
       ];
-      customAxios
-        .post("channel/getchannelbymembers", { data: members })
+      customAxios("channel/getchannelbymembers", {
+        method: "POST",
+        data: members,
+      })
         .then((res) => {
           if (res?.data) {
             const resData = res.data;
@@ -58,8 +60,9 @@ export default function UsersCard({ user }: Props) {
 
   return (
     <li
-      className={`cursor-pointer hover:bg-secondary p-2 group w-full border border-border rounded-md flex items-center justify-between ${
-        members.find(({ userId }) => userId === user.userId)
+      className={`cursor-pointer  p-2 group w-full rounded-md flex items-center justify-between ${
+        members.find(({ userId }) => userId === user.userId) &&
+        members?.length <= 2
           ? "bg-secondary"
           : ""
       }`}
@@ -95,7 +98,13 @@ export default function UsersCard({ user }: Props) {
                 </button>
               </DialogTrigger>
               <DialogContent>
-                <CreateGroup user={{userId:user.userId, userName: user.userName, isAdmin: false }} />
+                <CreateGroup
+                  user={{
+                    userId: user.userId,
+                    userName: user.userName,
+                    isAdmin: false,
+                  }}
+                />
               </DialogContent>
             </Dialog>
           </PopoverContent>

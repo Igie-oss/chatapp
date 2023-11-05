@@ -22,7 +22,7 @@ export default function Header({ toggelAside }: Props) {
   }, [channel.channelId]);
 
   return (
-    <header className="w-full flex-1 bg-secondary/40 flex items-center rounded-md justify-between shadow-sm  px-2 lg:px-4 ">
+    <header className="w-full flex-1 bg-secondary/50 flex items-center rounded-md justify-between shadow-sm  px-2 lg:px-4 ">
       {channel.channelId ? (
         <>
           <div className="flex gap-4 items-center">

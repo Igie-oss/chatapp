@@ -64,8 +64,7 @@ const RegisterForm = () => {
         email: values.email,
         password: values.password,
       };
-      await customAxios
-        .post("/register/reqotp", { data: registerData })
+      customAxios("/register/reqotp", { method: "POST", data: registerData })
         .then((res) => {
           if (res?.data) {
             const data = res?.data;
@@ -98,8 +97,7 @@ const RegisterForm = () => {
 
   useEffect(() => {
     (async () => {
-      await customAxios
-        .get("/register/getallusersname")
+      await customAxios("/register/getallusersname", { method: "GET" })
         .then((res) => {
           if (res?.data?.length) {
             const mappedData = res.data.map((data: UserNames) => {

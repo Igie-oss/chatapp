@@ -7,8 +7,7 @@ export default function SignOutBtn() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const handleSignOut = async () => {
-    await customAxios
-      .post("/auth/logout")
+    customAxios("/auth/logout", { method: "GET" })
       .then((res) => {
         if (res.data) {
           setIsLoading(false);

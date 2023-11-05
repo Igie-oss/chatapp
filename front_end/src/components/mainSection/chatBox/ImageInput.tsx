@@ -43,7 +43,7 @@ export default function ImageInput({
         <img
           title="Preview"
           src={preview}
-          className="absolute h-28 w-24 border rounded-md bottom-[115%] right-1"
+          className="absolute h-28 w-24 border rounded-md bottom-[130%] right-1"
         />
       )}
       {content.length ? null : (

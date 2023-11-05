@@ -9,8 +9,7 @@ export default function useGetUserChannels() {
   const { userId } = useAppStore((state) => state.user);
   useEffect(() => {
     setIsLoading(true);
-    customAxios
-      .get(`/channel/userchannels/${userId}`)
+    customAxios(`/channel/userchannels/${userId}`, { method: "GET" })
       .then((res) => {
         if (res?.data?.length) {
           setChannels(res.data);

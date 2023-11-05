@@ -34,8 +34,7 @@ const LoginForm = () => {
         email: values.email,
         password: values.password,
       };
-      await customAxios
-        .post("/auth/login", { ...logInData })
+      customAxios("/auth/login", { method: "POST", data: logInData })
         .then((response) => {
           setStatus({ status: EStatus.IS_SUCCESS });
           if (response.data.accessToken && response.status === 200) {
@@ -44,8 +43,8 @@ const LoginForm = () => {
             const user = decoded?.UserInfo;
             if (user) {
               setUser(user);
+              navigate("/chat/c/");
             }
-            navigate("/chat/c/");
           }
         })
         .catch((error) => {

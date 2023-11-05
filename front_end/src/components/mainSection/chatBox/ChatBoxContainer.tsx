@@ -30,7 +30,7 @@ export default function ChatboxContainer() {
           </div>
           <aside
             ref={asideRef}
-            className="h-full border w-full absolute top-0 left-0 flex flex-col gap-4 items-center p-2 rounded-md bg-background translate-x-full transition-all  xl:static xl:flex-1 xl:translate-x-0"
+            className="h-full border w-full absolute top-0 left-0 flex flex-col gap-5 items-center p-2 rounded-md bg-background translate-x-full transition-all  xl:static xl:flex-1 xl:translate-x-0"
           >
             <Aside toggelAside={toggelAside} />
           </aside>

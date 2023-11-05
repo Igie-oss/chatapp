@@ -6,8 +6,7 @@ export default function useGetUserGroupChannel(userId: string) {
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIsLoading(true);
-    customAxios
-      .get(`/channel/groupchannel/${userId}`)
+    customAxios(`/channel/groupchannel/${userId}`, { method: "GET" })
       .then((res) => {
         console.log(res);
         if (res.status === 200 && res.data?.length) setGroupChannels(res.data);

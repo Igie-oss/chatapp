@@ -88,9 +88,9 @@ export default function InputField() {
           <div className="svg-wrapper-1">
             <div className="svg-wrapper">
               <svg
-                height="24"
-                width="24"
-                viewBox="0 0 24 24"
+                height="20"
+                width="20"
+                viewBox="0 0 22 22"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M0 0h24v24H0z" fill="none"></path>

@@ -22,8 +22,7 @@ export default function VerifyOtp({ data }: Props) {
       otp: inputOtp,
     };
     setStatus({ status: EStatus.IS_LOADING });
-    customAxios
-      .post("/register/verifyotp", { data: otpVerifyData })
+    customAxios("/register/verifyotp", { method: "POST", data: otpVerifyData })
       .then((res: any) => {
         if (res?.status === 200) {
           handleRegisterUser();
@@ -45,8 +44,7 @@ export default function VerifyOtp({ data }: Props) {
       password: otpUserData.password,
     };
 
-    customAxios
-      .post("/register/newuser", { data: userData })
+    customAxios("/register/newuser", { method: "POST", data: userData })
       .then((res: any) => {
         setStatus({ status: EStatus.IS_SUCCESS });
         if (res.status === 201) {

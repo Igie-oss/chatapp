@@ -46,7 +46,7 @@ export default function MessageCard({ message }: Props) {
         ) : (
           <p
             className={`break-words max-w-[100%] text-sm w-fit h-fit p-2 border rounded-lg ${
-              user.userId === message?.senderId ? "bg-secondary" : ""
+              user.userId === message?.senderId ? "bg-secondary/50" : ""
             }`}
           >
             {message?.content}
