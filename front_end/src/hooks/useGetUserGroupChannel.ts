@@ -1,22 +1,14 @@
 import { customAxios } from "@/lib/helper";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
 export default function useGetUserGroupChannel(userId: string) {
-  const [groupChannels, setGroupChannels] = useState<TChannel[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    setIsLoading(true);
-    customAxios(`/channel/groupchannel/${userId}`, { method: "GET" })
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200 && res.data?.length) setGroupChannels(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [userId]);
+  const { data: groupChannels, isLoading } = useQuery({
+    queryKey:"get_user_group",
+    queryFn: async () => {
+      const res = await customAxios.get(`/channel/groupchannel/${userId}`);
+      return res?.data;
+    },
+  });
+
   return { groupChannels, isLoading };
 }

@@ -20,9 +20,9 @@ export default function GroupCard({ channel }: Props) {
       className="w-full h-12 flex gap-4 items-center hover:bg-secondary/50  rounded-md px-2 cursor-pointer"
     >
       <div className="h-8 w-8 rounded-full">
-        <UserAvatar id={channel.channelId} />
+        <UserAvatar id={channel?.channelId} />
       </div>
-      <h4 className="text-sm">{channel.groupName}</h4>
+      <h4 className="text-sm">{channel?.groupName}</h4>
     </li>
   );
 }

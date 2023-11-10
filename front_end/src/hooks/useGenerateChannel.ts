@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppStore } from "@/features/store";
 import { customAxios } from "@/lib/helper";
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 
 export default function useGenerateChannel() {
   const [channel, setChannel] = useState<TChannel>({
@@ -10,37 +11,37 @@ export default function useGenerateChannel() {
     members: [],
     groupName: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
   const { channelId } = useParams();
   const members = useAppStore((state) => state.members);
+
+  const { data, isLoading } = useQuery({
+    queryKey: `get_channel_to_check_${channelId}`,
+    enabled:!!channelId,
+    queryFn: async () => {
+      const res = await customAxios.get(`/channel/${channelId}`);
+      return res?.data;
+    },
+  });
+
   useEffect(() => {
-    if (!channelId) return;
-    setIsLoading(true);
-    customAxios
-    (`/channel/${channelId}`,{method:"GET"})
-      .then((res) => {
-        if (res?.data) {
-          setChannel(res.data);
-        } else {
-          setChannel({
-            channelId: channelId!,
-            members: members,
-            isGroup: false,
-            groupName: "",
-          });
-        }
-      })
-      .catch(() => {
-        setChannel({
-          channelId: channelId!,
-          members: members,
-          isGroup: channel.isGroup,
-          groupName: "",
-        });
-      })
-      .finally(() => {
-        setIsLoading(false);
+    if (!channelId) {
+      setChannel({
+        channelId: "",
+        isGroup: false,
+        members: [],
+        groupName: "",
       });
-  }, [channelId, members]);
+    }
+    if (data) {
+      setChannel(data);
+    } else {
+      setChannel({
+        channelId: channelId!,
+        members: members,
+        isGroup: false,
+        groupName: "",
+      });
+    }
+  }, [channelId, members, data]);
   return { channel, isLoading };
 }

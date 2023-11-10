@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
-import Header from "./Header";
-import AddedUsersList from "./AddedUsersList";
 import { useAppStore } from "@/features/store";
 import { EStatus } from "@/components/registerSection/RegisterForm";
 import BtnLoader from "@/components/shared/loader/BtnLoader";
 import { customAxios } from "@/lib/helper";
 import { DateTime } from "luxon";
 import { socket } from "@/socket";
+import UsersList from "./UsersListContainer";
 type Props = {
   user: TMembers;
 };
@@ -93,8 +92,10 @@ export default function CreateGroup({ user }: Props) {
           <p className="relative">{status?.message}</p>
         </div>
       ) : null}
+      <h2 className="text-lg font-semibold py-2 px-4 border border-border rounded-md bg-secondary/50">
+        Create Group
+      </h2>
 
-      <Header handleAddUser={handleAddUser} groupMembers={groupMembers} />
       <div className="w-full h-10">
         <input
           type="text"
@@ -104,10 +105,18 @@ export default function CreateGroup({ user }: Props) {
           className="w-[80%] h-full text-sm  px-2 border-b bg-transparent  outline-none"
         />
       </div>
-      <AddedUsersList
-        groupMembers={groupMembers}
-        handleRemoveUser={handleRemoveUser}
-      />
+      <div className="w-full flex flex-col items-center gap-5">
+        <div className="w-full flex flex-col rounded-md gap-3 p-2">
+          <h2 className="font-semibold text-sm">Group Members</h2>
+
+          <UsersList
+            handleAddUser={handleAddUser}
+            groupMembers={groupMembers}
+            handleRemoveUser={handleRemoveUser}
+          />
+        </div>
+      </div>
+
       <div className="w-full flex gap-4 mt-5">
         <DialogTrigger
           title="Cancel"

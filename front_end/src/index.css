@@ -75,6 +75,10 @@
     }
   }
 
+  textarea , input {
+    caret-color: hsl(var(--primary));
+  }
+
   .sendBtn {
     font-family: inherit;
     color: white;
@@ -137,7 +141,7 @@
   }
 
   input[type="search"]::-webkit-search-cancel-button {
-    padding: 0.2rem;
+    padding: 0.1rem;
     background-color: var(--primary);
     cursor: pointer;
   }

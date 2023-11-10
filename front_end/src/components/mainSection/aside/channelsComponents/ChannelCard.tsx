@@ -11,7 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import CreateGroup from "../groupChannelComponents/CreateGroup";
+import CreateGroup from "../groupChannelComponents/crateGroupComponents/CreateGroup";
 
 type Props = {
   message: TChannelMessages;
@@ -27,8 +27,6 @@ function ChannelCard({ message }: Props) {
     navigate(`/chat/c/${message.channelId}`);
     seTMembers(message.members);
   };
-
-  console.log(channelId === message?.channelId)
   return (
     <li
       style={{

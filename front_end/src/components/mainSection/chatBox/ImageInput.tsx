@@ -6,6 +6,7 @@ type Props = {
   setContentType: Dispatch<SetStateAction<EContentType>>;
 };
 import { EContentType } from "./InputField";
+import { MdOutlineClose } from "react-icons/md";
 export default function ImageInput({
   content,
   setContent,
@@ -40,13 +41,24 @@ export default function ImageInput({
         className="hidden"
       />
       {!preview || typeof content === "string" ? null : (
-        <img
-          title="Preview"
-          src={preview}
-          className="absolute h-28 w-24 border rounded-md bottom-[130%] right-1"
-        />
+        <div className="absolute h-28 w-24 border rounded-md p-1 border-border bottom-[130%] right-1">
+          <img
+            title="Preview"
+            src={preview}
+            className="w-full h-full object-cover rounded-sm"
+          />
+
+          <button
+            type="button"
+            title="remove"
+            onClick={() => setContent("")}
+            className="absolute -top-6 right-0 rounded-full p-1 border border-primary"
+          >
+            <MdOutlineClose className="w-4 h-4" />
+          </button>
+        </div>
       )}
-      {content.length ? null : (
+      {content?.length ? null : (
         <button
           title="add image"
           type="button"

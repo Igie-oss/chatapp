@@ -3,34 +3,35 @@ import MessageCard from "./MessageCard";
 import { BiMessageAltMinus } from "react-icons/bi";
 import { socket } from "@/socket";
 import { customAxios } from "@/lib/helper";
-import Skeleton from "@/components/shared/Skeleton";
+import BtnsLoaderSpinner from "@/components/shared/loader/BtnLoader";
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 
+// import { useInView } from "react-intersection-observer";
 export default function MessagesBox() {
   const { channelId } = useParams();
   const [messages, setMessages] = useState<TMessages[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLUListElement | null>(null);
 
+  // const { ref, inView, entry } = useInView({
+  //   /* Optional options */
+  //   threshold: 0,
+  // });
+
+  const { data, isFetching } = useQuery({
+    queryKey: `get_channel_messages_${channelId}`,
+    queryFn: async () => {
+      if(!channelId) return;
+      const res = await customAxios.get(`/channel/channelmessage/${channelId}`);
+      return res?.data;
+    },
+  });
+
   useEffect(() => {
-    if (!channelId) return;
-    setIsLoading(true);
-    customAxios(`/channel/channelmessage/${channelId}`, { method: "GET" })
-      .then((res) => {
-        if (res.data?.length) {
-          setMessages(res.data);
-        } else {
-          setMessages([]);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setMessages([]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [channelId]);
+    if (data?.length) {
+      setMessages(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     socket.on("new_message", (res) => {
@@ -50,14 +51,21 @@ export default function MessagesBox() {
         behavior: "smooth",
       });
     }
-  }, [messages]);
+  }, [messages, isFetching]);
+
+  // useEffect(() => {
+  //   console.log("Observer in view");
+  //   console.log(entry);
+  // }, [inView]);
+
 
   return (
     <ul
       ref={scrollRef}
       className="w-full h-[82%] overflow-y-auto overflow-x-auto p-2 py-10 flex flex-col items-center gap-2 relative"
     >
-      {isLoading ? (
+      {/* <span ref={ref} /> */}
+      {isFetching ? (
         <MessageLoader />
       ) : !messages.length ? (
         <div className="w-full flex flex-col items-center text-base gap-2 opacity-50">
@@ -81,53 +89,8 @@ const MessageLoader = () => {
   }
 
   return (
-    <div className="w-full flex flex-col gap-2">
-      <div className="w-full  flex items-center px-2 gap-2 ">
-        <div className="h-10 w-10 rounded-full overflow-hidden">
-          <Skeleton />
-        </div>
-
-        <div className="w-[70%] h-5 rounded-lg overflow-hidden">
-          <Skeleton />
-        </div>
-      </div>
-      <div className="w-full  flex items-center px-2 gap-2 ">
-        <div className="h-10 w-10 rounded-full overflow-hidden">
-          <Skeleton />
-        </div>
-
-        <div className="w-[70%] h-5 rounded-lg overflow-hidden">
-          <Skeleton />
-        </div>
-      </div>
-      <div className="w-full  flex items-center px-2 gap-2 ">
-        <div className="h-10 w-10 rounded-full overflow-hidden">
-          <Skeleton />
-        </div>
-
-        <div className="w-[70%] h-5 rounded-lg overflow-hidden">
-          <Skeleton />
-        </div>
-      </div>
-      {arr.map((a) => {
-        return (
-          <div
-            key={a}
-            className={`w-full  flex items-center px-2 gap-2 ${
-              a % 2 !== 0 ? "flex-row-reverse" : ""
-            }`}
-          >
-            {a % 2 === 0 ? (
-              <div className="h-10 w-10 rounded-full overflow-hidden">
-                <Skeleton />
-              </div>
-            ) : null}
-            <div className="w-[70%] h-5 rounded-lg overflow-hidden">
-              <Skeleton />
-            </div>
-          </div>
-        );
-      })}
+    <div className="w-full flex justify-center">
+      <BtnsLoaderSpinner />
     </div>
   );
 };

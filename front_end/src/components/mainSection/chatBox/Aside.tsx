@@ -32,7 +32,7 @@ export default function Aside({ toggelAside }: Props) {
             <UserAvatar
               id={
                 channel?.isGroup
-                  ? channel.channelId
+                  ? channel?.channelId
                   : channel?.members?.find((u) => u.userId !== userId)?.userId!
               }
             />

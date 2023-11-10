@@ -12,7 +12,7 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import CreateGroup from "../groupChannelComponents/CreateGroup";
+import CreateGroup from "../groupChannelComponents/crateGroupComponents/CreateGroup";
 type Props = {
   user: TUser;
 };
@@ -72,7 +72,7 @@ export default function UsersCard({ user }: Props) {
         className="h-full w-[90%] flex items-center gap-4"
       >
         <div className="w-8 h-8 flex items-start">
-          <UserAvatar id={user.userId} />
+          <UserAvatar id={user?.userId} />
         </div>
 
         <h1 className="font-semibold text-xs pointer-events-none">

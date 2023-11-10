@@ -57,7 +57,7 @@ export default function InputField() {
       {isTyping ? <Typing /> : null}
       <form
         onSubmit={handleSubmit}
-        className="h-full w-full rounded-md flex px-2 py-1 gap-2 md:gap-5 items-center"
+        className="h-full w-full rounded-md flex  gap-2 md:gap-5 items-center"
       >
         <div className="h-full w-full bg-secondary relative rounded-md px-2">
           <textarea

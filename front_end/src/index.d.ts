@@ -41,6 +41,7 @@ enum EContentType {
   TEXT = "text",
   IMG_URL = "image_url",
 }
+
 type TMessages = {
   id?: string;
   messageId: string;
@@ -55,4 +56,16 @@ type TChannelMessages = TMessages & {
   members: TMembers[];
   isGroup: boolean;
   groupName: string | null;
+};
+
+type AvatarData = {
+  id?: string;
+  avatarId: string;
+  imgData: {
+    data: {
+      data: Byte;
+      type: string;
+    };
+    mimetype: string;
+  };
 };

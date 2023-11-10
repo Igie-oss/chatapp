@@ -2,35 +2,28 @@ import { useEffect, useState } from "react";
 import { useAppStore } from "@/features/store";
 import { customAxios } from "@/lib/helper";
 import { socket } from "@/socket";
+import { useQuery } from "react-query";
 
 export default function useGetUserChannels() {
   const [channels, setChannels] = useState<TChannelMessages[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const { userId } = useAppStore((state) => state.user);
+
+  const { data, isLoading } = useQuery({
+    queryKey:"get_user_channels",
+    queryFn: async () => {
+      const res = await customAxios.get(`/channel/userchannels/${userId}`);
+      return res?.data;
+    },
+  });
+
   useEffect(() => {
-    setIsLoading(true);
-    customAxios(`/channel/userchannels/${userId}`, { method: "GET" })
-      .then((res) => {
-        if (res?.data?.length) {
-          setChannels(res.data);
-        } else {
-          setChannels([]);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setChannels([]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+    setChannels(data);
+  }, [data]);
 
   useEffect(() => {
     socket.on("new_channel", (res) => {
       if (res?.data) {
         const data = res.data;
-        console.log(data);
         const filtered = channels.filter((channel) => {
           return channel.channelId !== data?.channelId;
         });

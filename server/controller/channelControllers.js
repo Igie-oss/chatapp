@@ -94,7 +94,7 @@ const getChannelMessages = asycnHandler(async (req, res) => {
 
 const getChannelByMembers = asycnHandler(async (req, res) => {
   const members = req.body?.data;
-  if (!members.length) {
+  if (!members?.length) {
     return res.status(400).json({ message: "Chat mates required!" });
   }
 

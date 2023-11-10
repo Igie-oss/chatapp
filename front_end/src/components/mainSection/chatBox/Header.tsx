@@ -41,7 +41,7 @@ export default function Header({ toggelAside }: Props) {
                   <UserAvatar
                     id={
                       channel?.isGroup
-                        ? channel.channelId
+                        ? channel?.channelId
                         : channel?.members?.find((u) => u.userId !== userId)
                             ?.userId!
                     }
@@ -60,18 +60,18 @@ export default function Header({ toggelAside }: Props) {
               )}
             </div>
           </div>
+          <div className="flex items-end gap-5 px-4">
+            <button
+              type="button"
+              title="More"
+              onClick={toggelAside}
+              className="border p-2 rounded-full flex hover:bg-secondary xl:hidden"
+            >
+              <BsThreeDotsVertical className="w-6 h-6" />
+            </button>
+          </div>
         </>
       ) : null}
-      <div className="flex items-end gap-5 px-4">
-        <button
-          type="button"
-          title="More"
-          onClick={toggelAside}
-          className="border p-2 rounded-full flex hover:bg-secondary xl:hidden"
-        >
-          <BsThreeDotsVertical className="w-6 h-6" />
-        </button>
-      </div>
     </header>
   );
 }

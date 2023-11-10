@@ -25,7 +25,7 @@ export default function MessageCard({ message }: Props) {
             <Skeleton />
           ) : (
             <UserAvatar
-              id={channel?.isGroup ? channel.channelId : message?.senderId}
+              id={channel?.isGroup ? channel?.channelId : message?.senderId}
             />
           )}
         </div>

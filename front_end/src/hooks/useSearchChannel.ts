@@ -15,7 +15,7 @@ export default function useSearchChannel({ channels, searchText }: Props) {
     let timeout: NodeJS.Timeout = setTimeout(() => {
       let filtered: TChannelMessages[] = channels.filter(
         (channel: TChannelMessages) =>
-          channel.members.some((user) =>
+          channel.members?.some((user) =>
             user.userName.toLowerCase().includes(searchText.toLowerCase())
           ) ||
           channel.groupName?.toLowerCase().includes(searchText.toLowerCase())

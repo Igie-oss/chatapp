@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 
-const useConvertBytesToUrl = () => {
-  const [fileData, setFileData] = useState<any>("");
+const useConvertBytesToUrl = (fileData: any) => {
   const [blob, setBlob] = useState<string>("");
 
   const fileUrl = useMemo(() => {
-
     if (fileData?.imgData?.data) {
       const stringArray = fileData.imgData.data.data;
       const byteArray = new Uint8Array(stringArray);
@@ -25,7 +23,7 @@ const useConvertBytesToUrl = () => {
       }
     };
   }, [fileUrl]);
-  return { fileUrl: blob, setFileData };
+  return fileUrl;
 };
 
 export default useConvertBytesToUrl;
