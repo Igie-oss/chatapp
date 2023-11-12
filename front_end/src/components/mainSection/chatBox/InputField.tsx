@@ -3,15 +3,17 @@ import { asycnEmit } from "@/socket";
 import { useAppStore } from "@/features/store";
 import { DateTime } from "luxon";
 import useEmitTyping from "@/hooks/useEmitTyping";
-import useGenerateChannel from "@/hooks/useGenerateChannel";
 import uuid from "react-uuid";
 import ImageInput from "./ImageInput";
 export enum EContentType {
   TEXT = "text",
   IMG_URL = "image_url",
 }
-export default function InputField() {
-  const { channel } = useGenerateChannel();
+type Props = {
+  channel: TChannel;
+};
+export default function InputField({channel}:Props) {
+  
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
   const [contentType, setContentType] = useState(EContentType.TEXT);

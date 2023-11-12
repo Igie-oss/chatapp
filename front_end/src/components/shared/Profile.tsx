@@ -7,7 +7,7 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import UserAvatar from "@/components/shared/UserAvatar";
 import SignOutBtn from "@/components/shared/SignOutBtn";
-import ImageUploader from "./ImageUploader";
+import ImageUploader from "./AvatarImageUploadForm";
 export default function Profile() {
   const { userName, userId } = useAppStore((state) => state.user);
   return (
@@ -32,7 +32,15 @@ export default function Profile() {
           </div>
           <div className="flex flex-col gap-1">
             <h1 className="border-b pb-1">Settings</h1>
-            <div className="flex flex-col gap-2 my-2">
+            <div className="flex flex-col gap-1 my-2">
+              <Dialog>
+                <DialogTrigger className="text-sm font-semibold text-start border hover:bg-secondary rounded-sm p-2">
+                  <p className="text-sm font-normal">Change User Name</p>
+                </DialogTrigger>
+                <DialogContent>
+                  {/* <ImageUploader id={userId} /> */}
+                </DialogContent>
+              </Dialog>
               <Dialog>
                 <DialogTrigger className="text-sm font-semibold text-start border hover:bg-secondary rounded-sm p-2">
                   <p className="text-sm font-normal">Change Avatar</p>
@@ -41,9 +49,19 @@ export default function Profile() {
                   <ImageUploader id={userId} />
                 </DialogContent>
               </Dialog>
+
+              <span className="w-full border-b border-border mt-10 mb-5" />
+              <Dialog>
+                <DialogTrigger className="text-sm font-semibold text-start border bg-destructive/30 border-destructive rounded-sm p-2">
+                  <p className="text-sm font-normal">Delete Account</p>
+                </DialogTrigger>
+                <DialogContent>
+                  {/* <ImageUploader id={userId} /> */}
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
-          <div className="w-full flex mt-10">
+          <div className="w-full flex">
             <SignOutBtn />
           </div>
         </PopoverContent>

@@ -16,7 +16,7 @@ enum EStatus {
 }
 const LoginForm = () => {
   const navigate = useNavigate();
-  const [status, setStatus] = useState<TFetching | null>(null);
+  const [status, setStatus] = useState<TFormStatus | null>(null);
   const { setAuthToken, setUser } = useAppStore();
   const [isOpenEye, setIsOpenEye] = useState(false);
   const formik = useFormik({
@@ -30,11 +30,9 @@ const LoginForm = () => {
     }),
     onSubmit: async (values) => {
       setStatus({ status: EStatus.IS_LOADING });
-      const logInData: TLogin = {
-        email: values.email,
-        password: values.password,
-      };
-      customAxios("/auth/login", { method: "POST", data: logInData })
+
+      customAxios
+        .post("/auth/login", { email: values.email, password: values.password })
         .then((response) => {
           setStatus({ status: EStatus.IS_SUCCESS });
           if (response.data.accessToken && response.status === 200) {

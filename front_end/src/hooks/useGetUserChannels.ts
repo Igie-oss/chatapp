@@ -9,7 +9,7 @@ export default function useGetUserChannels() {
   const { userId } = useAppStore((state) => state.user);
 
   const { data, isLoading } = useQuery({
-    queryKey:"get_user_channels",
+    queryKey: "get_user_channels",
     queryFn: async () => {
       const res = await customAxios.get(`/channel/userchannels/${userId}`);
       return res?.data;
@@ -24,11 +24,15 @@ export default function useGetUserChannels() {
     socket.on("new_channel", (res) => {
       if (res?.data) {
         const data = res.data;
-        const filtered = channels.filter((channel) => {
-          return channel.channelId !== data?.channelId;
-        });
-        filtered.unshift(data);
-        setChannels(filtered);
+        if (channels.length) {
+          const filtered = channels.filter((channel) => {
+            return channel.channelId !== data?.channelId;
+          });
+          filtered.unshift(data);
+          setChannels(filtered);
+        } else {
+          setChannels(data);
+        }
       }
     });
 

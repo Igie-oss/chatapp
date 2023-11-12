@@ -35,23 +35,21 @@ const SkeletonUI = () => {
   }
   return arr.map((a) => {
     return (
-      <>
-        <li
-          key={Math.random()}
-          className="h-12 p-2 w-full rounded-md flex gap-1 pointer-events-none"
-        >
-          <div className="h-full w-[85%] flex items-end gap-1">
-            <div className="h-full w-12 flex items-start">
-              <div className="w-9 h-9 border rounded-full overflow-hidden">
-                <Skeleton />
-              </div>
-            </div>
-            <div className="w-32 h-3 mb-2 rounded-sm overflow-hidden">
+      <li
+        key={Math.random()}
+        className="h-12 p-2 w-full rounded-md flex gap-1 pointer-events-none"
+      >
+        <div className="h-full w-[85%] flex items-end gap-1">
+          <div className="h-full w-12 flex items-start">
+            <div className="w-9 h-9 border rounded-full overflow-hidden">
               <Skeleton />
             </div>
           </div>
-        </li>
-      </>
+          <div className="w-32 h-3 mb-2 rounded-sm overflow-hidden">
+            <Skeleton />
+          </div>
+        </div>
+      </li>
     );
   });
 };

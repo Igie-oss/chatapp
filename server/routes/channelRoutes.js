@@ -7,6 +7,7 @@ import {
   getChannelByMembers,
   createGroup,
   getUserGroupChannel,
+  changeGroupName,
 } from "../controller/channelControllers.js";
 const router = express.Router();
 router.use(verifyJWT);
@@ -23,4 +24,5 @@ router.route("/creatgroup").post(createGroup);
 
 router.route("/groupchannel/:userId").get(getUserGroupChannel);
 
+router.route("/updategroupname").patch(changeGroupName);
 export default router;

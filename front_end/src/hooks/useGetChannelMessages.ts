@@ -5,9 +5,11 @@ import { useQuery } from "react-query";
 export default function useGetChannelMessages(channelId: string) {
   const [messages, setMessages] = useState<TMessages[]>([]);
 
-  const { data, isLoading } = useQuery({
-    queryKey:"get_channel_messages",
+  const { data, isFetching } = useQuery({
+    queryKey: `get_channel_messages_${channelId}`,
+    enabled: !!channelId,
     queryFn: async () => {
+      if(!channelId) return;
       const res = await customAxios.get(`/channel/channelmessage/${channelId}`);
 
       return res?.data;
@@ -15,8 +17,11 @@ export default function useGetChannelMessages(channelId: string) {
   });
 
   useEffect(() => {
-    setMessages(data);
-  }, [data]);
+    if (data?.length) {
+      setMessages(data);
+    }
+  }, [data,isFetching]);
+
   useEffect(() => {
     socket.on("new_message", (res) => {
       if (res.data && res?.data?.channelId === channelId) {
@@ -28,5 +33,5 @@ export default function useGetChannelMessages(channelId: string) {
       socket.off("new_message");
     };
   }, [socket]);
-  return { messages, isLoading };
+  return { messages, isFetching };
 }

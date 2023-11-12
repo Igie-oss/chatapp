@@ -8,7 +8,7 @@ import otpEmail from "../lib/mailer/otpMailer.js";
 const saltRounds = process.env.SALTROUND;
 
 const requestEmailVerify = asycnHandler(async (req, res) => {
-  const { userName, email, password } = req.body?.data;
+  const { userName, email, password } = req.body;
 
   if (!userName | !email | !password) {
     return res.status(400).json({ message: "All field are required!" });
@@ -73,7 +73,7 @@ const requestEmailVerify = asycnHandler(async (req, res) => {
 });
 
 const verifyOtp = asycnHandler(async (req, res) => {
-  const { otpId, otp } = req.body?.data;
+  const { otpId, otp } = req.body;
   if (!otpId | !otp) {
     return res.status(400).json({ message: "All field are required!" });
   }
@@ -110,7 +110,7 @@ const verifyOtp = asycnHandler(async (req, res) => {
 });
 
 const reRequestOtp = asycnHandler(async (req, res) => {
-  const { otpId, email } = req.body?.data;
+  const { otpId, email } = req.body;
 
   if (!otpId | !email) {
     return res.status(400).json({ message: "All field are required!" });
@@ -148,7 +148,7 @@ const reRequestOtp = asycnHandler(async (req, res) => {
 });
 
 const registerUser = asycnHandler(async (req, res) => {
-  const {userId, userName, email, password } = req.body?.data;
+  const {userId, userName, email, password } = req.body;
   if (!userId || !userName || !email || !password) {
     return res.status(400).json({ message: "All field are required!" });
   }

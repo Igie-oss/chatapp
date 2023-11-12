@@ -20,7 +20,7 @@ export default function MessageCard({ message }: Props) {
       }}
     >
       {user.userId !== message?.senderId ? (
-        <div className="w-10 h-10 rounded-full overflow-hidden">
+        <div className="w-8 h-8 rounded-full overflow-hidden">
           {isLoading ? (
             <Skeleton />
           ) : (

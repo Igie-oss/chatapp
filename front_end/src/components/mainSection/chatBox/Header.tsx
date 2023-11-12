@@ -5,25 +5,23 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import UserAvatar from "@/components/shared/UserAvatar";
 import { useAppStore } from "@/features/store";
-import Skeleton from "@/components/shared/Skeleton";
-import useGenerateChannel from "@/hooks/useGenerateChannel";
 type Props = {
   toggelAside: () => void;
+  channel: TChannel;
 };
-export default function Header({ toggelAside }: Props) {
+export default function Header({ channel, toggelAside }: Props) {
   const userId = useAppStore((state) => state.user.userId);
-  const { channel, isLoading } = useGenerateChannel();
   useEffect(() => {
-    if (!channel.channelId) return;
-    socket.emit("join-channel", channel.channelId);
+    if (!channel?.channelId) return;
+    socket.emit("join-channel", channel?.channelId);
     return () => {
       socket.off("join-channel");
     };
-  }, [channel.channelId]);
+  }, [channel?.channelId]);
 
   return (
     <header className="w-full flex-1 bg-secondary/50 flex items-center rounded-md justify-between shadow-sm  px-2 lg:px-4 ">
-      {channel.channelId ? (
+      {channel?.channelId ? (
         <>
           <div className="flex gap-4 items-center">
             <Link
@@ -33,11 +31,9 @@ export default function Header({ toggelAside }: Props) {
             >
               <MdArrowBackIosNew className="w-6 h-6 pointer-events-none" />
             </Link>
-            <div className="flex items-end gap-2">
-              <div className="w-9 h-9 rounded-full overflow-hidden">
-                {isLoading ? (
-                  <Skeleton />
-                ) : (
+            {channel?.channelId ? (
+              <div className="flex items-end gap-2">
+                <div className="w-8 h-8 rounded-full overflow-hidden">
                   <UserAvatar
                     id={
                       channel?.isGroup
@@ -46,19 +42,16 @@ export default function Header({ toggelAside }: Props) {
                             ?.userId!
                     }
                   />
-                )}
-              </div>
-              {isLoading ? (
-                <div className="h-3 w-16 rounded-lg overflow-hidden"></div>
-              ) : (
+                </div>
+
                 <h1 className="mb-1 ml-2 text-sm font-semibold">
                   {channel?.isGroup
-                    ? channel.groupName
+                    ? channel?.groupName
                     : channel?.members?.find((u) => u.userId !== userId)
                         ?.userName!}
                 </h1>
-              )}
-            </div>
+              </div>
+            ) : null}
           </div>
           <div className="flex items-end gap-5 px-4">
             <button

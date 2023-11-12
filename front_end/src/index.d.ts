@@ -11,7 +11,7 @@ enum EStatus {
   IS_LOADING = "isLoading",
   IS_ERROR = "isError",
 }
-type TFetching = {
+type TFormStatus = {
   status: EStatus;
   message?: string;
 };

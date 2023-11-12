@@ -1,7 +1,7 @@
 import { BiSearch } from "react-icons/bi";
 import ChannelList from "./ChannelList";
 import { useDeferredValue, useState } from "react";
-import { Button } from "@/components/ui/button";
+import CreateGroupBtn from "@/components/shared/CreateGroupBtn";
 export default function ChannelListContainer() {
   const [searchText, setSearchText] = useState("");
   const searchTextDeffered = useDeferredValue(searchText);
@@ -17,7 +17,7 @@ export default function ChannelListContainer() {
             className="w-full h-full  outline-none text-sm bg-transparent"
           />
         </div>
-        <Button>Create Group</Button>
+        <CreateGroupBtn />
       </div>
       <ChannelList searchText={searchTextDeffered} />
     </header>

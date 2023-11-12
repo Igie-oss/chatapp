@@ -12,7 +12,7 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import CreateGroup from "../groupChannelComponents/crateGroupComponents/CreateGroup";
+import CreateGroupForm from "../groupChannelComponents/crateGroupComponents/CreateGroupForm";
 type Props = {
   user: TUser;
 };
@@ -28,7 +28,7 @@ export default function UsersCard({ user }: Props) {
         {
           userId: currentUser.userId,
           userName: currentUser.userName,
-          isAdmin: true,
+          isAdmin: false,
         },
         {
           userId: user.userId,
@@ -36,10 +36,8 @@ export default function UsersCard({ user }: Props) {
           isAdmin: false,
         },
       ];
-      customAxios("channel/getchannelbymembers", {
-        method: "POST",
-        data: members,
-      })
+      customAxios
+        .post("channel/getchannelbymembers", { members })
         .then((res) => {
           if (res?.data) {
             const resData = res.data;
@@ -47,13 +45,14 @@ export default function UsersCard({ user }: Props) {
           } else {
             navigate(`/chat/c/${uuid()}`);
           }
-          seTMembers(members);
         })
         .catch((err) => {
           if (err) {
             navigate(`/chat/c/${uuid()}`);
-            seTMembers(members);
           }
+        })
+        .finally(() => {
+          seTMembers(members);
         });
     })();
   };
@@ -98,7 +97,7 @@ export default function UsersCard({ user }: Props) {
                 </button>
               </DialogTrigger>
               <DialogContent>
-                <CreateGroup
+                <CreateGroupForm
                   user={{
                     userId: user.userId,
                     userName: user.userName,

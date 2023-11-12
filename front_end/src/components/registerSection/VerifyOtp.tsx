@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 import { TRegisterResData } from "./RegisterForm";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import BtnLoader from "@/components/shared/loader/BtnLoader";
 import { customAxios } from "@/lib/helper";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,8 @@ import { EStatus } from "./RegisterForm";
 
 type Props = { data: TRegisterResData };
 export default function VerifyOtp({ data }: Props) {
-  const [status, setStatus] = useState<TFetching | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [status, setStatus] = useState<TFormStatus | null>(null);
   const [inputOtp, setInputOtp] = useState("");
   const [otpUserData, setOtpUserData] = useState<TRegisterResData>(data);
   const navigate = useNavigate();
@@ -17,12 +18,9 @@ export default function VerifyOtp({ data }: Props) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const otpVerifyData = {
-      otpId: otpUserData.otpId,
-      otp: inputOtp,
-    };
     setStatus({ status: EStatus.IS_LOADING });
-    customAxios("/register/verifyotp", { method: "POST", data: otpVerifyData })
+    customAxios
+      .post("/register/verifyotp", { otpId: otpUserData.otpId, otp: inputOtp })
       .then((res: any) => {
         if (res?.status === 200) {
           handleRegisterUser();
@@ -37,14 +35,13 @@ export default function VerifyOtp({ data }: Props) {
   };
 
   const handleRegisterUser = async () => {
-    const userData = {
-      userId: otpUserData.userId,
-      userName: otpUserData.userName,
-      email: otpUserData.email,
-      password: otpUserData.password,
-    };
-
-    customAxios("/register/newuser", { method: "POST", data: userData })
+    customAxios
+      .post("/register/newuser", {
+        userId: otpUserData.userId,
+        userName: otpUserData.userName,
+        email: otpUserData.email,
+        password: otpUserData.password,
+      })
       .then((res: any) => {
         setStatus({ status: EStatus.IS_SUCCESS });
         if (res.status === 201) {
@@ -59,6 +56,9 @@ export default function VerifyOtp({ data }: Props) {
       });
   };
 
+  useEffect(() => {
+    inputRef?.current?.focus();
+  }, []);
   return (
     <section className="w-screen h-screen flex flex-col gap-10 items-center pt-[10rem] rounded-lg">
       <form
@@ -81,6 +81,7 @@ export default function VerifyOtp({ data }: Props) {
         </header>
         <main className="w-full flex flex-col items-center gap-8">
           <input
+            ref={inputRef}
             type="text"
             placeholder="Enter your Otp"
             value={inputOtp || ""}

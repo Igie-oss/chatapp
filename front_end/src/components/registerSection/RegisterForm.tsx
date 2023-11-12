@@ -24,7 +24,7 @@ export type TRegisterResData = {
   password: string;
 };
 const RegisterForm = () => {
-  const [status, setStatus] = useState<TFetching | null>(null);
+  const [status, setStatus] = useState<TFormStatus | null>(null);
   const [existUsersNames, setExistUsersNames] = useState<string[]>([]);
   const [registerRes, setRegisterRes] = useState<TRegisterResData>({
     otpId: "",
@@ -59,14 +59,14 @@ const RegisterForm = () => {
       }
 
       setStatus({ status: EStatus.IS_LOADING });
-      const registerData = {
-        userName: values.userName,
-        email: values.email,
-        password: values.password,
-      };
-      customAxios("/register/reqotp", { method: "POST", data: registerData })
+      customAxios
+        .post("/register/reqotp", {
+          userName: values.userName,
+          email: values.email,
+          password: values.password,
+        })
         .then((res) => {
-          if (res?.data) {
+          if (res?.data && res.status === 200) {
             const data = res?.data;
             setRegisterRes({
               otpId: data.otpId,
@@ -97,7 +97,8 @@ const RegisterForm = () => {
 
   useEffect(() => {
     (async () => {
-      await customAxios("/register/getallusersname", { method: "GET" })
+      customAxios
+        .get("/register/getallusersname")
         .then((res) => {
           if (res?.data?.length) {
             const mappedData = res.data.map((data: UserNames) => {

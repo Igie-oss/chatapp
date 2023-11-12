@@ -11,7 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import CreateGroup from "../groupChannelComponents/crateGroupComponents/CreateGroup";
+import CreateGroupForm from "../groupChannelComponents/crateGroupComponents/CreateGroupForm";
 
 type Props = {
   message: TChannelMessages;
@@ -42,7 +42,7 @@ function ChannelCard({ message }: Props) {
         onClick={handleClick}
         className="h-full w-[90%] flex items-start gap-3"
       >
-        <div className="w-10 h-10 rounded-full overflow-hidden">
+        <div className="w-8 h-8 rounded-full overflow-hidden">
           <UserAvatar
             id={
               message?.isGroup
@@ -69,7 +69,7 @@ function ChannelCard({ message }: Props) {
               <span className="h-4" />
             )}
             {message?.sendAt ? (
-              <p className="text-[10px]  opacity-50 pointer-events-none">
+              <p className="text-[10px]   opacity-50 pointer-events-none">
                 <DisplayDate date={message.sendAt} />
               </p>
             ) : null}
@@ -98,7 +98,7 @@ function ChannelCard({ message }: Props) {
                 </DialogTrigger>
               )}
               <DialogContent>
-                <CreateGroup
+                <CreateGroupForm
                   user={message?.members?.find((u) => u.userId !== userId)!}
                 />
               </DialogContent>

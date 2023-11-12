@@ -7,7 +7,14 @@ import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 if (import.meta.env.VITE_NODE_ENV === "production") disableReactDevTools();
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // default: true
+    },
+  },
+});
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

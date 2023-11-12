@@ -19,7 +19,7 @@ export default function MainContainer() {
   }, [userId, socket]);
 
   return (
-    <section className="w-screen h-screen flex items-center justify-center ">
+    <section className="w-screen h-screen flex items-center justify-center p-2">
       <main className="h-full w-full flex relative overflow-x-hidden">
         <Aside />
         <ChatBoxContainer />

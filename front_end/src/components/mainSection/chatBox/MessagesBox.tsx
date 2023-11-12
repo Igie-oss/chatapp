@@ -1,49 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
 import MessageCard from "./MessageCard";
 import { BiMessageAltMinus } from "react-icons/bi";
-import { socket } from "@/socket";
-import { customAxios } from "@/lib/helper";
 import BtnsLoaderSpinner from "@/components/shared/loader/BtnLoader";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
-
+import useGetChannelMessages from "@/hooks/useGetChannelMessages";
 // import { useInView } from "react-intersection-observer";
 export default function MessagesBox() {
   const { channelId } = useParams();
-  const [messages, setMessages] = useState<TMessages[]>([]);
   const scrollRef = useRef<HTMLUListElement | null>(null);
-
+  const { messages, isFetching } = useGetChannelMessages(channelId!);
   // const { ref, inView, entry } = useInView({
   //   /* Optional options */
   //   threshold: 0,
   // });
-
-  const { data, isFetching } = useQuery({
-    queryKey: `get_channel_messages_${channelId}`,
-    queryFn: async () => {
-      if(!channelId) return;
-      const res = await customAxios.get(`/channel/channelmessage/${channelId}`);
-      return res?.data;
-    },
-  });
-
-  useEffect(() => {
-    if (data?.length) {
-      setMessages(data);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    socket.on("new_message", (res) => {
-      if (res.data && res?.data?.channelId === channelId) {
-        setMessages((prev) => [...prev, res.data]);
-      }
-    });
-
-    return () => {
-      socket.off("new_message");
-    };
-  }, [socket, messages]);
 
   useEffect(() => {
     if (messages?.length) {
@@ -57,7 +26,6 @@ export default function MessagesBox() {
   //   console.log("Observer in view");
   //   console.log(entry);
   // }, [inView]);
-
 
   return (
     <ul

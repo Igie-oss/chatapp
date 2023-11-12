@@ -23,7 +23,7 @@ export default function SignOutBtn() {
       onClick={handleSignOut}
       type="button"
       size="sm"
-      className="text-xs font-semibold"
+      className="text-xs font-semibold w-full"
     >
       {isLoading ? <BtnsLoaderSpinner /> : "Sign Out"}
     </Button>

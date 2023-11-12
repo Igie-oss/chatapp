@@ -1,20 +1,21 @@
-import { DialogTrigger } from "@radix-ui/react-dialog";
+import { DialogTrigger, DialogFooter} from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import { useRef, useState } from "react";
 import { BsImage } from "react-icons/bs";
 import { customAxios } from "@/lib/helper";
 import { EStatus } from "../registerSection/RegisterForm";
 import BtnsLoaderSpinner from "./loader/BtnLoader";
+import { useQueryClient } from "react-query";
 type Props = {
   id: string;
 };
 
-export default function ImageUploader({ id }: Props) {
+export default function AvatarImageUploadForm({ id }: Props) {
   const inputImgRef = useRef<HTMLInputElement | null>(null);
   const [imageData, setImageData] = useState<any>(null);
   const [preview, setPreview] = useState<any>(null);
-  const [status, setStatus] = useState<TFetching | null>(null);
-
+  const [status, setStatus] = useState<TFormStatus | null>(null);
+const queryClient = useQueryClient()
   const handleInput = (e: any) => {
     const file = e.target.files[0];
     setImageData(file);
@@ -40,7 +41,13 @@ export default function ImageUploader({ id }: Props) {
       data: formUploadData,
     })
       .then((res) => {
-        console.log(res);
+        if (res?.status === 200) {
+          setStatus({
+            status: EStatus.IS_SUCCESS,
+            message: "Avatar change successfully!",
+          });
+          queryClient.invalidateQueries({queryKey:`user_avatar_${id}`})
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -49,12 +56,6 @@ export default function ImageUploader({ id }: Props) {
           message: "Failed to upload file",
         });
       })
-      .finally(() => {
-        setStatus(null);
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
   };
   return (
     <form
@@ -65,6 +66,16 @@ export default function ImageUploader({ id }: Props) {
       <h1 className="text-lg font-semibold px-4 py-2 mb-5 bg-secondary border rounded-md">
         Change Avatar
       </h1>
+      {status?.status === EStatus.IS_ERROR ? (
+        <p className="text-sm text-destructive my-5 px-3 py-2 border bg-secondary/50 border-destructive">
+          {status?.message}
+        </p>
+      ) : null}
+      {status?.status === EStatus.IS_SUCCESS ? (
+        <p className="text-sm my-5 px-3 py-2 border bg-secondary/50 border-border">
+          {status?.message}
+        </p>
+      ) : null}
       {!preview ? (
         <button
           title="Add image"
@@ -100,7 +111,7 @@ export default function ImageUploader({ id }: Props) {
         onChange={handleInput}
         className="hidden"
       />
-      <div className="w-full flex items-center justify-center gap-5 mt-8">
+      <DialogFooter className="mt-5">
         <DialogTrigger
           title="Cancel"
           type="button"
@@ -120,7 +131,7 @@ export default function ImageUploader({ id }: Props) {
             "Save"
           )}
         </Button>
-      </div>
+      </DialogFooter>
     </form>
   );
 }

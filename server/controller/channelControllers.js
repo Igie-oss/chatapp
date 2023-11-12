@@ -56,17 +56,17 @@ const getUserChannels = asycnHandler(async (req, res) => {
 const getChannel = asycnHandler(async (req, res) => {
   const channelId = req.params.channelId;
   try {
-    const foundChanel = await prisma.channel.findFirst({
+    const foundChannel = await prisma.channel.findFirst({
       where: {
         channelId,
       },
     });
 
-    if (!foundChanel?.channelId) {
+    if (!foundChannel?.channelId) {
       return res.status(404).json({ message: "No channel found" });
     }
 
-    return res.status(200).json(foundChanel);
+    return res.status(200).json(foundChannel);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Something went wrong!" });
@@ -93,7 +93,7 @@ const getChannelMessages = asycnHandler(async (req, res) => {
 });
 
 const getChannelByMembers = asycnHandler(async (req, res) => {
-  const members = req.body?.data;
+  const { members } = req.body;
   if (!members?.length) {
     return res.status(400).json({ message: "Chat mates required!" });
   }
@@ -118,8 +118,8 @@ const getChannelByMembers = asycnHandler(async (req, res) => {
 });
 
 const createGroup = asycnHandler(async (req, res) => {
-  const data = req.body?.data;
-  if (data?.members?.length <= 1 || !data?.groupName) {
+  const { members, groupName } = req.body;
+  if (members?.length <= 1 || !groupName) {
     return res
       .status(400)
       .json({ message: "Group members must have members!" });
@@ -130,8 +130,8 @@ const createGroup = asycnHandler(async (req, res) => {
       data: {
         channelId: uuid(),
         isGroup: true,
-        members: data.members,
-        groupName: data.groupName,
+        members: members,
+        groupName: groupName,
         createdAt: dateNow(),
       },
     });
@@ -167,6 +167,44 @@ const getUserGroupChannel = asycnHandler(async (req, res) => {
     return res.status(500).json({ message: "Something went wrong!" });
   }
 });
+
+const changeGroupName = asycnHandler(async (req, res) => {
+  const { channelId, newGroupName } = req.body;
+  if (!channelId || !newGroupName) {
+    return res
+      .status(400)
+      .json({ message: "channelId and groupname are required!" });
+  }
+  try {
+    const foundGroup = await prisma.channel.findUnique({
+      where: { channelId },
+      select: { groupName: true },
+    });
+
+    if (!foundGroup?.groupName) {
+      return res.status(404).json({ message: "Group not found!" });
+    }
+
+    const updateGroup = await prisma.channel.update({
+      where: { channelId },
+      data: {
+        groupName: newGroupName,
+      },
+    });
+
+    if (!updateGroup?.groupName) {
+      throw new Error("Failed to update!");
+    }
+
+    return res
+      .status(202)
+      .json({ message: "Group name updated successfully!" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Something went wrong!" });
+  }
+});
+
 export {
   getUserChannels,
   getChannel,
@@ -174,4 +212,5 @@ export {
   getChannelByMembers,
   createGroup,
   getUserGroupChannel,
+  changeGroupName,
 };
