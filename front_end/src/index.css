@@ -73,9 +73,11 @@
     &::-webkit-scrollbar-track {
       background-color: hsl(var(--background));
     }
+    scroll-behavior: smooth;
   }
 
-  textarea , input {
+  textarea,
+  input {
     caret-color: hsl(var(--primary));
   }
 
@@ -96,6 +98,7 @@
     display: block;
     margin-left: 0.3em;
     transition: all 0.3s ease-in-out;
+    transform: translateX(0);
   }
 
   .sendBtn svg {

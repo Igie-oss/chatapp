@@ -6,17 +6,20 @@ import LoadingSpinner from "@/components/shared/loader/LoadingSpinner";
 import Persist from "@/components/shared/Persist";
 import RedirectComponent from "@/components/shared/RedirectComponent";
 const Router = () => {
-  const HomePage = lazy(() => import("@/components/landingSection/HomePage"));
-  const Login = lazy(() => import("@/components/loginSection/LoginForm"));
-  const Register = lazy(
-    () => import("@/components/registerSection/RegisterForm")
+  const LandingScreen = lazy(() => import("@/pages/LandingScreen"));
+
+  const LoginScreen = lazy(() => import("@/pages/LoginScreen"));
+
+  const RegisterScreen = lazy(
+    () => import("@/pages/RegisterScreen")
   );
-  const MainContainer = lazy(
-    () => import("@/components/mainSection/MainContainer")
+
+  const ChatScreen = lazy(
+    () => import("@/pages/ChatScreen")
   );
 
   const ChatBox = lazy(
-    () => import("@/components/mainSection/chatBox/ChatBoxContainer")
+    () => import("@/components/ChatBoardComponents/chatBoardComponents/ChatBoxContainer")
   );
 
   return (
@@ -28,7 +31,7 @@ const Router = () => {
             path="/"
             element={
               <RedirectComponent>
-                <HomePage />
+                <LandingScreen />
               </RedirectComponent>
             }
           />
@@ -36,14 +39,14 @@ const Router = () => {
             path="/login"
             element={
               <RedirectComponent>
-                <Login />
+                <LoginScreen />
               </RedirectComponent>
             }
           />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<RegisterScreen />} />
           <Route element={<Persist />}>
             <Route element={<ProtectedRoutes />}>
-              <Route path="/chat/c/" element={<MainContainer />}>
+              <Route path="/chat/c/" element={<ChatScreen />}>
                 <Route path="/chat/c/:channelId" element={<ChatBox />} />
               </Route>
             </Route>

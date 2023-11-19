@@ -1,7 +1,6 @@
-
 import checkIsTodday from "@/lib/isToday"
-import formatTime from "@/lib/formatTime";
-import formatDate from "@/lib/formatDate";
+import  {formatDate, formatTime } from "@/lib/formatting"
+
 type Props = {
   date: Date;
 };

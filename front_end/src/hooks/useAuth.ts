@@ -1,4 +1,4 @@
-import { useAppStore } from "@/features/store";
+import { useAppStore } from "@/services/states/store";
 const useAuth =  () => {
   const { token } = useAppStore();
   let isAuthenticated = false;

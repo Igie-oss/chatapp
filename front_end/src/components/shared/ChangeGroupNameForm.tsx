@@ -2,7 +2,7 @@ import { useState } from "react";
 import { DialogTrigger,DialogFooter } from "@/components/ui/dialog";
 import BtnsLoaderSpinner from "./loader/BtnLoader";
 import { Button } from "../ui/button";
-import { EStatus } from "../registerSection/RegisterForm";
+import { EStatus } from "@/pages/RegisterScreen";
 import { customAxios } from "@/lib/helper";
 
 type Props = {

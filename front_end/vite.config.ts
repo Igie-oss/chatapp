@@ -1,5 +1,4 @@
-import { defineConfig } from "vite";
-import { splitVendorChunkPlugin } from "vite";
+import { defineConfig,splitVendorChunkPlugin } from "vite";
 import path from "path";
 import react from "@vitejs/plugin-react";
 

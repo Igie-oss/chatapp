@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAppStore } from "@/features/store";
+import { useAppStore } from "@/services/states/store";
 import { useParams } from "react-router-dom";
 
 export default function useIsAllowed(chatMembers:TMembers[]) {

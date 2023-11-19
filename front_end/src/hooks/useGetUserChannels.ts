@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAppStore } from "@/features/store";
+import { useAppStore } from "@/services/states/store";
 import { customAxios } from "@/lib/helper";
 import { socket } from "@/socket";
 import { useQuery } from "react-query";

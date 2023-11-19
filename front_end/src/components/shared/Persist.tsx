@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
-import { useAppStore } from "@/features/store";
+import { useAppStore } from "@/services/states/store";
 import LoadingSpinner from "./loader/LoadingSpinner";
 import { customAxios } from "@/lib/helper";
 import jwtDecode from "jwt-decode";

@@ -1,4 +1,4 @@
-import { useAppStore } from "@/features/store";
+import { useAppStore } from "@/services/states/store";
 import axios,{AxiosInstance} from "axios";
 
 export async function getToken() {

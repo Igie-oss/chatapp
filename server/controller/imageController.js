@@ -71,26 +71,29 @@ const uploadImage = multer({
   },
 });
 
+const sharpFn = (imageData) => {
+  sharp(fs.readFileSync(`${imageData.filePath}`))
+    .resize(500, 500)
+    .toFormat("png", { palette: true })
+    .toFile(`${imageData.filePath}`, (err, info) => {
+      if (err) {
+        console.log("Sharp Error: ", err);
+        if (fs.existsSync(imageData.filePath)) {
+          fs.unlink(`${imageData.filePath}`, function (err) {
+            if (err) {
+              console.log(err);
+            }
+          });
+        }
+        return res.status(500).json({ message: "Failed to upload Image!" });
+      }
+    });
+};
+
 const imageAvatarUpload = asycnHandler(async (req, res) => {
   const { id } = req.body;
   try {
-    sharp(fs.readFileSync(`${imageData.filePath}`))
-      .resize(500, 500)
-      .toFormat("png", { palette: true })
-      .toFile(`${imageData.filePath}`, (err, info) => {
-        if (err) {
-          console.log("Sharp Error: ", err);
-          if (fs.existsSync(imageData.filePath)) {
-            fs.unlink(`${imageData.filePath}`, function (err) {
-              if (err) {
-                console.log(err);
-              }
-            });
-          }
-          return res.status(500).json({ message: "Failed to upload Image!" });
-        }
-      });
-
+    sharpFn(imageData);
     const uploadData = {
       avatarId: id,
       imgData: {
@@ -145,4 +148,35 @@ const getImageById = asycnHandler(async (req, res) => {
   }
 });
 
-export { uploadImage, imageAvatarUpload, getImageById };
+const handleSendImage = asycnHandler(async (req, res) => {
+  try {
+    sharpFn(imageData);
+    const uploadData = {
+      avatarId: uuid(),
+      imgData: {
+        data: fs.readFileSync(`${imageData.filePath}`),
+        mimetype: imageData.mimetype,
+      },
+    };
+
+    const saveImage = await prisma.avatar.create({
+      data: uploadData,
+    });
+
+    if (saveImage?.avatarId) {
+      if (fs.existsSync(imageData.filePath)) {
+        fs.unlink(`${imageData.filePath}`, function (err) {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+    }
+
+    return res.status(200).json({ data: saveImage?.avatarId });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Something went wrong!" });
+  }
+});
+export { uploadImage, imageAvatarUpload, getImageById ,handleSendImage};

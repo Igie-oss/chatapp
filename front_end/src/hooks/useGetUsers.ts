@@ -1,4 +1,4 @@
-import { useAppStore } from "@/features/store";
+import { useAppStore } from "@/services/states/store";
 import { customAxios } from "@/lib/helper";
 import { useQuery } from "react-query";
 

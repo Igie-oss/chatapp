@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { useRef, useState } from "react";
 import { BsImage } from "react-icons/bs";
 import { customAxios } from "@/lib/helper";
-import { EStatus } from "../registerSection/RegisterForm";
+import { EStatus } from "@/pages/RegisterScreen";
 import BtnsLoaderSpinner from "./loader/BtnLoader";
 import { useQueryClient } from "react-query";
 type Props = {

@@ -1,16 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import useConvertBytesToUrl from "@/hooks/useConvertBytesToUrl";
 import useGetUserAvatar from "@/hooks/useGetUserAvatar";
+import useConvertBytesToUrl from "@/hooks/useConvertBytesToUrl";
 import { memo } from "react";
-function UserAvatar({ id }: { id: string }) {
+function ImageContent({ id }: { id: string }) {
   const avatarData = useGetUserAvatar(id);
   const fileUrl = useConvertBytesToUrl(avatarData);
-
   return (
-    <Avatar className="h-full w-full border border-primary/50">
+    <Avatar className="h-full w-full !rounded-none">
       <AvatarImage src={fileUrl} />
-      <AvatarFallback className="w-full h-full rounded-full bg-secondary animate-pulse" />
+      <AvatarFallback className="w-full h-full !rounded-none bg-secondary animate-pulse" />
     </Avatar>
   );
 }
-export default memo(UserAvatar);
+export default memo(ImageContent);

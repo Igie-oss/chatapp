@@ -1,4 +1,4 @@
-import { useAppStore } from "@/features/store";
+import { useAppStore } from "@/services/states/store";
 import {
   Popover,
   PopoverContent,
@@ -34,7 +34,7 @@ export default function Profile() {
             <h1 className="border-b pb-1">Settings</h1>
             <div className="flex flex-col gap-1 my-2">
               <Dialog>
-                <DialogTrigger className="text-sm font-semibold text-start border hover:bg-secondary rounded-sm p-2">
+                <DialogTrigger className="text-sm font-semibold text-start  hover:bg-secondary/50 rounded-sm p-2">
                   <p className="text-sm font-normal">Change User Name</p>
                 </DialogTrigger>
                 <DialogContent>
@@ -42,7 +42,7 @@ export default function Profile() {
                 </DialogContent>
               </Dialog>
               <Dialog>
-                <DialogTrigger className="text-sm font-semibold text-start border hover:bg-secondary rounded-sm p-2">
+                <DialogTrigger className="text-sm font-semibold text-start hover:bg-secondary/50 rounded-sm  p-2">
                   <p className="text-sm font-normal">Change Avatar</p>
                 </DialogTrigger>
                 <DialogContent>
@@ -52,7 +52,7 @@ export default function Profile() {
 
               <span className="w-full border-b border-border mt-10 mb-5" />
               <Dialog>
-                <DialogTrigger className="text-sm font-semibold text-start border bg-destructive/30 border-destructive rounded-sm p-2">
+                <DialogTrigger className="text-sm font-semibold text-start text-destructive hover:bg-secondary/50 rounded-sm p-2">
                   <p className="text-sm font-normal">Delete Account</p>
                 </DialogTrigger>
                 <DialogContent>
