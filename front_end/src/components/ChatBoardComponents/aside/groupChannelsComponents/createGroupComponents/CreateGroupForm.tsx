@@ -23,7 +23,6 @@ export default function CreateGroupForm({ user }: Props) {
     if (user) {
       setGroupMembers((prev) => [...prev, { ...user, isAdmin: false }]);
     }
-    console.log(groupMembers)
   }, [user]);
 
   const handleRemoveUser = (userId: string) => {

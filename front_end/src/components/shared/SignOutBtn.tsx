@@ -7,14 +7,18 @@ export default function SignOutBtn() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const handleSignOut = async () => {
-    customAxios("/auth/logout", { method: "GET" })
+    setIsLoading(true);
+    customAxios
+      .post("/auth/logout")
       .then((res) => {
         if (res.data) {
-          setIsLoading(false);
           navigate("/login");
         }
       })
       .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };
@@ -23,7 +27,7 @@ export default function SignOutBtn() {
       onClick={handleSignOut}
       type="button"
       size="sm"
-      className="text-xs font-semibold w-full"
+      className="text-xs font-semibold w-[50%]"
     >
       {isLoading ? <BtnsLoaderSpinner /> : "Sign Out"}
     </Button>

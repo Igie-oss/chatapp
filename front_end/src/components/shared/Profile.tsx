@@ -4,10 +4,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import UserAvatar from "@/components/shared/UserAvatar";
 import SignOutBtn from "@/components/shared/SignOutBtn";
 import ImageUploader from "./AvatarImageUploadForm";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { Button } from "../ui/button";
 export default function Profile() {
   const { userName, userId } = useAppStore((state) => state.user);
   return (
@@ -62,7 +69,18 @@ export default function Profile() {
             </div>
           </div>
           <div className="w-full flex">
-            <SignOutBtn />
+            <Dialog>
+              <DialogTrigger className="text-xs font-semibold  w-full text-center bg-primary rounded-sm p-2">
+                Sing Out
+              </DialogTrigger>
+              <DialogContent className="flex flex-col items-center gap-10 max-w-[22rem]">
+                <h2>Are you sure you want yo sign out?</h2>
+                <DialogFooter className="w-full flex items-center justify-between">
+                  <DialogClose className="w-1/2 bg-secondary h-8 rounded-md text-xs">Cancel</DialogClose>
+                  <SignOutBtn />
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </PopoverContent>
       </Popover>

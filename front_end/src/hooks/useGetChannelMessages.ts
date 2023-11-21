@@ -1,34 +1,48 @@
 import { useEffect, useState } from "react";
 import { customAxios } from "@/lib/helper";
 import { socket } from "@/socket";
-import { useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 export default function useGetChannelMessages(
   channelId: string,
   cursor: string
 ) {
-  const [messages, setMessages] = useState<TMessages[]>([]);
+  const [messages, setMessages] = useState<TMessages[][]>([]);
+  const { data, error, fetchNextPage, hasNextPage, isFetching } =
+    useInfiniteQuery(
+      `channel_messages_${channelId}`,
+      async ({ pageParam = cursor }): Promise<TMessages[]> => {
+        if (!channelId) return [];
+        const res = await customAxios.get(
+          `/channel/channelmessage/${channelId}?cursor=${pageParam}`
+        );
+        return res?.data;
+      },
+      {
+        getNextPageParam: (lastPage, pages) => {
+          return lastPage[0]?.messageId;
+        },
+        select: (data) => ({
+          pages: [...data.pages].reverse(),
+          pageParams: [...data.pageParams].reverse(),
+        }),
+      }
+    );
 
-  const { data, isFetching } = useQuery({
-    queryKey: `get_channel_messages_${channelId}`,
-    enabled: !!channelId,
-    queryFn: async () => {
-      if (!channelId) return;
-      const res = await customAxios.get(
-        `/channel/channelmessage/${channelId}?cursor=${cursor}`
-      );
-      return res?.data;
-    },
-  });
   useEffect(() => {
-    if (data?.length) {
-      setMessages(data);
+    if (data?.pages) {
+      setMessages(data.pages);
     }
-  }, [data, isFetching]);
+  }, [data, isFetching, hasNextPage]);
 
   useEffect(() => {
     socket.on("new_message", (res) => {
       if (res.data && res?.data?.channelId === channelId) {
-        setMessages((prev) => [...prev, res.data]);
+        setMessages((prev) => {
+          const indexOfLastArr = prev?.length > 0 ? prev?.length - 1 : 0;
+          let newMessage = [...prev[indexOfLastArr]];
+          newMessage = [...prev[indexOfLastArr], res.data];
+          return [...prev.slice(0, indexOfLastArr), newMessage];
+        });
       }
     });
 
@@ -36,5 +50,10 @@ export default function useGetChannelMessages(
       socket.off("new_message");
     };
   }, [socket]);
-  return { messages, isFetching};
+  return {
+    messages,
+    error,
+    fetchNextPage,
+    isFetching,
+  };
 }

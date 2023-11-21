@@ -78,21 +78,20 @@ const getChannelMessages = asycnHandler(async (req, res) => {
   const cursor = req.query.cursor;
   try {
     const query = {
-      // take: 20,
+      take: 20,
       where: { channelId },
       orderBy: [{ sendAt: "desc" }, { id: "desc" }],
     };
 
     //!Update for pagination on scroll
-    // if (cursor) {
-    //   query.cursor = {
-    //     messageId: cursor,
-    //   };
-    // }
-
+    if (cursor) {
+      query.cursor = {
+        messageId: cursor,
+      };
+    }
 
     const foundMessages = await prisma.messages.findMany(query);
-
+    
     if (!foundMessages?.length) {
       return res.status(404).json({ message: "No Messages found" });
     }

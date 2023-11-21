@@ -53,7 +53,7 @@ export default function Header({ channel, toggelAside }: Props) {
               </div>
             ) : null}
           </div>
-          <div className="flex items-end gap-5 px-4">
+          <div className="flex items-end">
             <button
               type="button"
               title="More"
