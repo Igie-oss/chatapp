@@ -14,7 +14,7 @@ export default function useGenerateChannel(channelId: string) {
 
   const { data, isFetching } = useQuery({
     queryKey: `get_channel_to_check_${channelId}`,
-    enabled: !!channel?.channelId,
+    enabled: !!channelId,
     queryFn: async () => {
       if(!channelId) return;
       const res = await customAxios.get(`/channel/${channelId}`);

@@ -71,33 +71,23 @@ const uploadImage = multer({
   },
 });
 
-const sharpFn = (imageData) => {
-  sharp(fs.readFileSync(`${imageData.filePath}`))
-    .resize(500, 500)
-    .toFormat("png", { palette: true })
-    .toFile(`${imageData.filePath}`, (err, info) => {
-      if (err) {
-        console.log("Sharp Error: ", err);
-        if (fs.existsSync(imageData.filePath)) {
-          fs.unlink(`${imageData.filePath}`, function (err) {
-            if (err) {
-              console.log(err);
-            }
-          });
-        }
-        return res.status(500).json({ message: "Failed to upload Image!" });
-      }
-    });
+const resizeImage = async (fileLoc) => {
+  const resizedImage = await sharp(fs.readFileSync(`${fileLoc}`))
+    .resize(2000, 2000, { withoutEnlargement: true, fit: "inside" })
+    .withMetadata()
+    .jpeg({ quality: 80 })
+    .toBuffer();
+  return resizedImage;
 };
 
 const imageAvatarUpload = asycnHandler(async (req, res) => {
   const { id } = req.body;
   try {
-    sharpFn(imageData);
+    const resizedImage = await resizeImage(imageData.filePath);
     const uploadData = {
       avatarId: id,
       imgData: {
-        data: fs.readFileSync(`${imageData.filePath}`),
+        data: resizedImage,
         mimetype: imageData.mimetype,
       },
     };
@@ -150,11 +140,11 @@ const getImageById = asycnHandler(async (req, res) => {
 
 const handleSendImage = asycnHandler(async (req, res) => {
   try {
-    sharpFn(imageData);
+    const resizedImage = await resizeImage(imageData.filePath);
     const uploadData = {
       avatarId: uuid(),
       imgData: {
-        data: fs.readFileSync(`${imageData.filePath}`),
+        data: resizedImage,
         mimetype: imageData.mimetype,
       },
     };
@@ -179,4 +169,4 @@ const handleSendImage = asycnHandler(async (req, res) => {
     return res.status(500).json({ message: "Something went wrong!" });
   }
 });
-export { uploadImage, imageAvatarUpload, getImageById ,handleSendImage};
+export { uploadImage, imageAvatarUpload, getImageById, handleSendImage };

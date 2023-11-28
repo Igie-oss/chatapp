@@ -11,7 +11,7 @@ export default function GroupCard({ channel }: Props) {
 
   const handleClick = () => {
     setMembers(channel.members);
-    navigate(`${channel.channelId}`);
+    navigate(`c/${channel.channelId}`);
   };
   return (
     <li

@@ -1,19 +1,19 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import InputField from "./InputField";
 import MessagesBox from "./MessagesBox";
 import LoaderSpinner from "@/components/shared/loader/LoadingSpinner";
 import useGenerateChannel from "@/hooks/useGenerateChannel";
 import Aside from "./aside/Aside";
-import useIsAllowed from "@/hooks/useIsAllowed";
+
 import { useParams } from "react-router-dom";
+import { useAppStore } from "@/services/states/store";
 export default function ChatboxContainer() {
   const { channelId } = useParams();
-  const { channel, isFetching } = useGenerateChannel(channelId!);
-  const isAllowed = useIsAllowed(channel.members);
-
+  const { channel, isFetching } = useGenerateChannel(channelId as string);
+  const user = useAppStore((state) => state.user);
   const asideRef = useRef<HTMLElement | null>(null);
-
+  const [isAllowed, setIsAllowed] = useState(false);
   const toggelAside = () => {
     if (asideRef?.current?.classList.contains("translate-x-full")) {
       asideRef.current.classList.remove("translate-x-full");
@@ -21,6 +21,16 @@ export default function ChatboxContainer() {
       asideRef?.current?.classList.add("translate-x-full");
     }
   };
+
+  useEffect(() => {
+    const filtered = channel?.members?.filter(
+      (cuser) => cuser?.userId === user?.userId
+    );
+    if (filtered.length) {
+      setIsAllowed(true);
+    }
+  }, [channel.members]);
+
   return (
     <main className="w-full h-full flex p-2 gap-2 relative">
       {isFetching ? (
@@ -30,7 +40,7 @@ export default function ChatboxContainer() {
           <div className="h-full w-full items-center px-1 flex flex-col gap-2 xl:w-[60%] 2xl:w-[70%] 2xl:max-w-[65rem]">
             <Header channel={channel} toggelAside={toggelAside} />
             <MessagesBox />
-            <InputField channel={channel}/>
+            <InputField channel={channel} />
           </div>
           <aside
             ref={asideRef}

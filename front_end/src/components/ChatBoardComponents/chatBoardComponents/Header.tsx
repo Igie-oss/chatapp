@@ -26,7 +26,7 @@ export default function Header({ channel, toggelAside }: Props) {
           <div className="flex gap-4 items-center">
             <Link
               title="Close"
-              to="/chat/c/"
+              to="/chat"
               className="lg:hidden border p-2 rounded-full flex hover:bg-secondary"
             >
               <MdArrowBackIosNew className="w-6 h-6 pointer-events-none" />

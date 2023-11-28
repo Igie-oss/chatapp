@@ -1,27 +1,32 @@
 import { customAxios } from "@/lib/helper";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-type Props = {
-  children: React.ReactNode;
-};
-
-export default function RedirectComponent({ children }: Props) {
+import { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import LoadingSpinner from "./loader/LoadingSpinner";
+import { EStatus } from "@/pages/RegisterScreen";
+export default function RedirectComponent() {
   const navigate = useNavigate();
-  const [isRedirect, setIsRedirect] = useState(false);
+  const [actionStatus, setActionStatus] = useState<TFormStatus | null>(null);
+
   useEffect(() => {
-    customAxios("/auth/redirect", { method: "GET" })
-      .then((res) => {
+    setActionStatus({ status: EStatus.IS_LOADING });
+
+    (async () => {
+      try {
+        const res = await customAxios.get("/auth/redirect");
         if (res?.status === 200) {
-          setIsRedirect(true);
+          setActionStatus({ status: EStatus.IS_SUCCESS });
+          navigate("/chat");
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      } catch (error) {
+        console.log(error);
+        setActionStatus({ status: EStatus.IS_ERROR });
+      }
+    })();
   }, []);
 
-  if (isRedirect) {
-    navigate("/chat/c/");
-  }
-  return <>{children}</>;
+  return actionStatus?.status === EStatus.IS_LOADING ? (
+    <LoadingSpinner />
+  ) : actionStatus?.status === EStatus.IS_ERROR ? (
+    <Outlet />
+  ) : null;
 }

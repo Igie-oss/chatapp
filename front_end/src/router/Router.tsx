@@ -10,16 +10,15 @@ const Router = () => {
 
   const LoginScreen = lazy(() => import("@/pages/LoginScreen"));
 
-  const RegisterScreen = lazy(
-    () => import("@/pages/RegisterScreen")
-  );
+  const RegisterScreen = lazy(() => import("@/pages/RegisterScreen"));
 
-  const ChatScreen = lazy(
-    () => import("@/pages/ChatScreen")
-  );
+  const ChatScreen = lazy(() => import("@/pages/ChatScreen"));
 
   const ChatBox = lazy(
-    () => import("@/components/ChatBoardComponents/chatBoardComponents/ChatBoxContainer")
+    () =>
+      import(
+        "@/components/ChatBoardComponents/chatBoardComponents/ChatBoxContainer"
+      )
   );
 
   return (
@@ -27,26 +26,14 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<ErrorRouting />} />
-          <Route
-            path="/"
-            element={
-              <RedirectComponent>
-                <LandingScreen />
-              </RedirectComponent>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <RedirectComponent>
-                <LoginScreen />
-              </RedirectComponent>
-            }
-          />
+          <Route element={<RedirectComponent />}>
+            <Route path="/" element={<LandingScreen />} />
+            <Route path="/login" element={<LoginScreen />} />
+          </Route>
           <Route path="/register" element={<RegisterScreen />} />
           <Route element={<Persist />}>
             <Route element={<ProtectedRoutes />}>
-              <Route path="/chat/c/" element={<ChatScreen />}>
+              <Route path="/chat" element={<ChatScreen />}>
                 <Route path="/chat/c/:channelId" element={<ChatBox />} />
               </Route>
             </Route>

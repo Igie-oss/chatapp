@@ -13,22 +13,22 @@ const Persist = () => {
   useEffect((): any => {
     const refresher = async () => {
       setIsLoading(true);
-      customAxios("/auth/refresh", { method: "GET" })
-        .then((response: any) => {
-          if (response.data.accessToken && response.status === 200) {
-            setAuthToken(response.data.accessToken);
-            const decoded: any = jwtDecode(response.data.accessToken);
-            const user = decoded?.UserInfo;
-            setUser(user);
-          }
-          setSuccess(true);
-          setIsLoading(false);
-        })
-        .catch((error: any) => {
-          setIsError(true);
-          setIsLoading(false);
-          setErrorMsg(error.response?.data.message);
-        });
+      try {
+        const res = await customAxios.get("/auth/refresh");
+        if (res?.data?.accessToken && res?.status === 200) {
+          setAuthToken(res.data.accessToken);
+          const decoded: any = jwtDecode(res.data.accessToken);
+          const user = decoded?.UserInfo;
+          setUser(user);
+        }
+        setSuccess(true);
+        setIsLoading(false);
+      } catch (error: any) {
+        console.log(error);
+        setIsError(true);
+        setIsLoading(false);
+        setErrorMsg(error.response?.data.message);
+      }
     };
     if (!token) refresher();
   }, []);

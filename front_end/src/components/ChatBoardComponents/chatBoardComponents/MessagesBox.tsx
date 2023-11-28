@@ -16,7 +16,7 @@ export default function MessagesBox() {
 
   useEffect(() => {
     if (messages?.length) {
-      setCursor(messages[0][0].messageId);
+      setCursor(messages[0][0]?.messageId);
 
       if (!(messages.length > 1)) {
         scrollRef?.current?.lastElementChild?.scrollIntoView({

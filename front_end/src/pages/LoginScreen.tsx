@@ -46,7 +46,6 @@ const LoginForm = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
           setStatus({
             status: EStatus.IS_SUCCESS,
             message: error.response.data.message,

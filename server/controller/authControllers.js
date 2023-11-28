@@ -55,7 +55,7 @@ const logIn = asyncHandler(async (req, res) => {
       sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000,
     });
-    return res.json({ accessToken });
+    return res.status(200).json({ accessToken });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong!" });
@@ -103,7 +103,7 @@ const refresh = asyncHandler(async (req, res) => {
           },
           process.env.ACCESS_TOKEN_SECRET
         );
-        return res.json({ accessToken });
+        return res.status(200).json({ accessToken });
       }
     );
   } catch (error) {
@@ -123,10 +123,42 @@ const logOut = asyncHandler(async (req, res) => {
 
 const redirect = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
-
   if (!cookies?.jwt) {
-    return res.sendStatus(204);
+    return res.status(401).json({ message: "Unauthorized!" });
   }
-  return res.status(200).json({ message: "Has cookie" });
+  try {
+    const refreshToken = cookies.jwt;
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      async (err, decoded) => {
+        if (err) {
+          return res.status(403).json({ message: "Forbidden!" });
+        }
+        const userId = decoded.userId;
+        const foundUser = await prisma.users.findUnique({
+          where: { userId },
+          select: {
+            userId: true,
+            userName: true,
+          },
+        });
+        if (!foundUser) {
+          res.clearCookie("jwt", {
+            httpOnly: true,
+            sameSite: "None",
+            secure: true,
+          });
+          return res.status(401).json({ message: "Cookie cleared!" });
+        }
+    
+        return res.status(200).json({ message:"Has cookies" });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something went wrong!" });
+  }
 });
+
 export { logIn, refresh, logOut, redirect };
