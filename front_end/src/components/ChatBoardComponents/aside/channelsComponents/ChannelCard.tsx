@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppStore } from "@/services/states/store";
-import {  memo } from "react";
+import { memo } from "react";
 import DisplayDate from "@/components/shared/DisplayDate";
 import { BsThreeDotsVertical, BsTrash3 } from "react-icons/bs";
 import { HiOutlineUserGroup } from "react-icons/hi";
@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import CreateGroupForm from "../groupChannelsComponents/createGroupComponents/CreateGroupForm";
 import { EContentType } from "../../chatBoardComponents/InputField";
 import UserAvatar from "@/components/shared/UserAvatar";
+import useGetChannelIdSearchParams from "@/hooks/useGetChannelIdSearchParams";
 type Props = {
   message: TChannelMessages;
 };
@@ -20,21 +21,18 @@ type Props = {
 function ChannelCard({ message }: Props) {
   const userId = useAppStore((state) => state.user.userId);
   const seTMembers = useAppStore((state) => state.seTMembers);
-  const { channelId } = useParams();
+  const channelId = useGetChannelIdSearchParams();
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/chat/c/${message.channelId}`);
+    navigate(`/chat/channel?channelId=${message.channelId}`);
     seTMembers(message.members);
   };
   return (
     <li
-      style={{
-        backgroundColor: `${
-          channelId === message?.channelId ? "hsl(var(--secondary))" : ""
-        }`,
-      }}
-      className="group p-2 w-full h-fit hover:shadow-md bg-transparent rounded-lg flex justify-between gap-1 cursor-pointer"
+      className={`group p-2 w-full h-fit  rounded-lg flex justify-between gap-1 cursor-pointer ${
+        channelId === message?.channelId ? "bg-secondary" : "bg-transparent"
+      }`}
     >
       <div
         onClick={handleClick}
@@ -58,7 +56,9 @@ function ChannelCard({ message }: Props) {
 
           <div className="w-full flex items-end gap-2">
             {message.contentType === EContentType.IMG_URL ? (
-              <p className="text-xs font-medium opacity-70 pointer-events-none">{"image..."}</p>
+              <p className="text-xs font-medium opacity-70 pointer-events-none">
+                {"image..."}
+              </p>
             ) : message.content ? (
               <h5 className="text-xs font-medium opacity-70 pointer-events-none">
                 {message?.senderId === userId ? "You: " : ""}

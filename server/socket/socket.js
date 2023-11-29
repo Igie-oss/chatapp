@@ -36,7 +36,6 @@ const socketConnection = (httpServer) => {
   io.on("connection", (socket) => {
     console.log("Socket connnected");
     socket.on("registerUser", async (userId) => {
-      console.log(`User registered: ${userId}`);
       socket.join(userId);
     });
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { socket } from "@/socket";
-import { useParams } from "react-router-dom";
+import useGetChannelIdSearchParams from "./useGetChannelIdSearchParams";
 export default function useEmitTyping() {
-  const { channelId } = useParams();
+  const channelId = useGetChannelIdSearchParams();
   const [isTyping, setIsTyping] = useState(false);
   const [typingTimeOut, setTypingTimeOut] = useState<any>(null);
 

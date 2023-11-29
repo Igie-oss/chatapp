@@ -41,14 +41,14 @@ export default function UsersCard({ user }: Props) {
         .then((res) => {
           if (res?.data) {
             const resData = res.data;
-            navigate(`/chat/c/${resData.channelId}`);
+            navigate(`/chat/channel?channelId=${resData.channelId}`);
           } else {
-            navigate(`/chat/c/${uuid()}`);
+            navigate(`/chat/channel?channelId=${uuid()}`);
           }
         })
         .catch((err) => {
           if (err) {
-            navigate(`/chat/c/${uuid()}`);
+            navigate(`/chat/channel?channelId=${uuid()}`);
           }
         })
         .finally(() => {

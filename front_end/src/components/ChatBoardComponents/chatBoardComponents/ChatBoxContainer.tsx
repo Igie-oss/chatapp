@@ -5,11 +5,10 @@ import MessagesBox from "./MessagesBox";
 import LoaderSpinner from "@/components/shared/loader/LoadingSpinner";
 import useGenerateChannel from "@/hooks/useGenerateChannel";
 import Aside from "./aside/Aside";
-
-import { useParams } from "react-router-dom";
 import { useAppStore } from "@/services/states/store";
+import useGetChannelIdSearchParams from "@/hooks/useGetChannelIdSearchParams";
 export default function ChatboxContainer() {
-  const { channelId } = useParams();
+  const channelId = useGetChannelIdSearchParams();
   const { channel, isFetching } = useGenerateChannel(channelId as string);
   const user = useAppStore((state) => state.user);
   const asideRef = useRef<HTMLElement | null>(null);
@@ -35,7 +34,7 @@ export default function ChatboxContainer() {
     <main className="w-full h-full flex p-2 gap-2 relative">
       {isFetching ? (
         <LoaderSpinner />
-      ) : channel?.channelId && isAllowed ? (
+      ) : channel?.channelId && isAllowed && channelId ? (
         <>
           <div className="h-full w-full items-center px-1 flex flex-col gap-2 xl:w-[60%] 2xl:w-[70%] 2xl:max-w-[65rem]">
             <Header channel={channel} toggelAside={toggelAside} />

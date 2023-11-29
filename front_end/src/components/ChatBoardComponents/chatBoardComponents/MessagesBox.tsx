@@ -2,11 +2,11 @@ import { useEffect, useRef, useState, Fragment } from "react";
 import MessageCard from "./MessageCard";
 import { BiMessageAltMinus } from "react-icons/bi";
 import BtnsLoaderSpinner from "@/components/shared/loader/BtnLoader";
-import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import useGetChannelMessages from "@/hooks/useGetChannelMessages";
+import useGetChannelIdSearchParams from "@/hooks/useGetChannelIdSearchParams";
 export default function MessagesBox() {
-  const { channelId } = useParams();
+  const channelId = useGetChannelIdSearchParams();
   const [cursor, setCursor] = useState("");
   const scrollRef = useRef<HTMLUListElement | null>(null);
   const { messages, error, fetchNextPage, isFetching } = useGetChannelMessages(
@@ -14,22 +14,21 @@ export default function MessagesBox() {
     cursor
   );
 
+  const { ref, inView } = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
+
   useEffect(() => {
     if (messages?.length) {
       setCursor(messages[0][0]?.messageId);
-
-      if (!(messages.length > 1)) {
+      if (!(messages?.length > 1)) {
         scrollRef?.current?.lastElementChild?.scrollIntoView({
           behavior: "smooth",
         });
       }
     }
   }, [messages]);
-
-  const { ref, inView } = useInView({
-    /* Optional options */
-    threshold: 0,
-  });
 
   useEffect(() => {
     let timer: NodeJS.Timeout;

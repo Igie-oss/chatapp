@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Header from "./Header";
-import { useParams } from "react-router-dom";
 import ChannelListContainer from "./channelsComponents/ChannelListContainer";
 import UserListContainer from "./userListComponents/UserListContainer";
 import Navigation from "./Navigation";
 import GroupChannelListContainer from "./groupChannelsComponents/GroupChannelListContainer";
+import useGetChannelIdSearchParams from "@/hooks/useGetChannelIdSearchParams";
 export enum ENavigation {
   IS_CHANNEL_LIST = "is_channel_list",
   IS_USER_LIST = "is_user_list",
@@ -18,7 +18,7 @@ export default function Aside() {
   const [navigate, setNavigate] = useState<TNavigation>({
     isShow: ENavigation.IS_CHANNEL_LIST,
   });
-  const { channelId } = useParams();
+  const channelId = useGetChannelIdSearchParams();
   const toggleAside = () => {
     if (sideRef?.current?.classList.contains("-translate-x-full")) {
       sideRef.current.classList.remove("-translate-x-full");
