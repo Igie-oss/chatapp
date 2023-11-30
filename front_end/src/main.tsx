@@ -8,23 +8,23 @@ import { QueryClient, QueryClientProvider } from "react-query";
 if (import.meta.env.VITE_NODE_ENV === "production") disableReactDevTools();
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false, // default: true
-    },
-  },
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false, // default: true
+		},
+	},
 });
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+	document.getElementById("root") as HTMLElement
 );
 
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <App />
-      </ThemeProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
+	<React.StrictMode>
+		<QueryClientProvider client={queryClient}>
+			<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+				<App />
+			</ThemeProvider>
+		</QueryClientProvider>
+	</React.StrictMode>
 );
