@@ -2,6 +2,6 @@
 front_end/.env
 front_end/node_modules
 
-# server
-server/.env
-server/node_modules
+# back_end
+back_end/.env
+back_end/node_modules

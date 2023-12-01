@@ -9,6 +9,8 @@ export default function useUserAvatar(id: string) {
 			const res = await customAxios.get(`/images/getimagebyid/${id}`);
 			return res?.data;
 		},
+		retry: false,
+		refetchOnMount: false,
 	});
 
 	return avatarData ?? null;

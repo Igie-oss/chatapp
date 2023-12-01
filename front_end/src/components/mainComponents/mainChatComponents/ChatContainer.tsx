@@ -9,7 +9,9 @@ import { useAppStore } from "@/services/states/store";
 import useGetChannelIdSearchParams from "@/hooks/useGetChannelIdSearchParams";
 export default function ChatboxContainer() {
 	const channelId = useGetChannelIdSearchParams();
+
 	const { channel, isFetching } = useGenerateChannel(channelId as string);
+
 	const user = useAppStore((state) => state.user);
 	const asideRef = useRef<HTMLElement | null>(null);
 	const [isAllowed, setIsAllowed] = useState(false);
@@ -31,7 +33,7 @@ export default function ChatboxContainer() {
 	}, [channel?.members, user?.userId]);
 
 	return (
-		<main className="w-full h-full flex p-2 gap-2 relative">
+		<>
 			{isFetching ? (
 				<LoaderSpinner />
 			) : channel?.channelId && isAllowed && channelId ? (
@@ -48,6 +50,6 @@ export default function ChatboxContainer() {
 					</aside>
 				</>
 			) : null}
-		</main>
+		</>
 	);
 }

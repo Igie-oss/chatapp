@@ -6,42 +6,39 @@ import LoadingSpinner from "@/components/shared/loader/LoadingSpinner";
 import Persist from "@/components/shared/Persist";
 import RedirectComponent from "@/components/shared/RedirectComponent";
 const Router = () => {
-  const LandingScreen = lazy(() => import("@/pages/LandingScreen"));
+	const LandingScreen = lazy(() => import("@/pages/LandingScreen"));
 
-  const LoginScreen = lazy(() => import("@/pages/LoginScreen"));
+	const LoginScreen = lazy(() => import("@/pages/LoginScreen"));
 
-  const RegisterScreen = lazy(() => import("@/pages/RegisterScreen"));
+	const RegisterScreen = lazy(() => import("@/pages/RegisterScreen"));
 
-  const ChatScreen = lazy(() => import("@/pages/ChatScreen"));
+	const MainScreen = lazy(() => import("@/pages/MainScreen"));
 
-  const ChatBox = lazy(
-    () =>
-      import(
-        "@/components/ChatBoardComponents/chatBoardComponents/ChatBoxContainer"
-      )
-  );
+	const ChatContainer = lazy(
+		() => import("@/components/mainComponents/mainChatComponents/ChatContainer")
+	);
 
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<ErrorRouting />} />
-          <Route element={<RedirectComponent />}>
-            <Route path="/" element={<LandingScreen />} />
-            <Route path="/login" element={<LoginScreen />} />
-          </Route>
-          <Route path="/register" element={<RegisterScreen />} />
-          <Route element={<Persist />}>
-            <Route element={<ProtectedRoutes />}>
-              <Route path="/chat" element={<ChatScreen />}>
-                <Route path="/chat/channel" element={<ChatBox />} />
-              </Route>
-            </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </Suspense>
-  );
+	return (
+		<Suspense fallback={<LoadingSpinner />}>
+			<BrowserRouter>
+				<Routes>
+					<Route path="*" element={<ErrorRouting />} />
+					<Route element={<RedirectComponent />}>
+						<Route path="/" element={<LandingScreen />} />
+						<Route path="/login" element={<LoginScreen />} />
+					</Route>
+					<Route path="/register" element={<RegisterScreen />} />
+					<Route element={<Persist />}>
+						<Route element={<ProtectedRoutes />}>
+							<Route path="/message" element={<MainScreen />}>
+								<Route path="/message/channel" element={<ChatContainer />} />
+							</Route>
+						</Route>
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		</Suspense>
+	);
 };
 
 export default Router;

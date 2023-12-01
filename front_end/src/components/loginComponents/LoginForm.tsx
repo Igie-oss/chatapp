@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa6";
 import { BsFillPersonFill } from "react-icons/bs";
@@ -9,11 +10,7 @@ import { customAxios } from "@/lib/helper";
 import jwtDecode from "jwt-decode";
 import { Button } from "@/components/ui/button";
 import BtnLoader from "@/components/shared/loader/BtnLoader";
-enum EStatus {
-	IS_SUCCESS = "isSuccess",
-	IS_LOADING = "isLoading",
-	IS_ERROR = "isError",
-}
+import { EStatus } from "@/enum";
 export default function LoginForm() {
 	const navigate = useNavigate();
 	const [status, setStatus] = useState<TFormStatus | null>(null);
@@ -44,7 +41,7 @@ export default function LoginForm() {
 						const user = decoded?.UserInfo;
 						if (user) {
 							setUser(user);
-							navigate("/chat");
+							navigate("/message");
 						}
 					}
 				})

@@ -1,13 +1,9 @@
+import { ENavigation, EStatus } from "@/enum";
 declare global {
 	type TLogin = {
 		email: string;
 		password: string;
 	};
-	enum EStatus {
-		IS_SUCCESS = "isSuccess",
-		IS_LOADING = "isLoading",
-		IS_ERROR = "isError",
-	}
 	type TFormStatus = {
 		status: EStatus;
 		message?: string;
@@ -33,11 +29,6 @@ declare global {
 		members: TMembers[];
 		groupName: string;
 	};
-
-	enum EContentType {
-		TEXT = "text",
-		IMG_URL = "image_url",
-	}
 
 	type TMessages = {
 		id?: string;
@@ -65,6 +56,17 @@ declare global {
 			};
 			mimetype: string;
 		};
+	};
+	type TNavigation = {
+		isShow: ENavigation;
+	};
+
+	type TRegisterResData = {
+		otpId: string;
+		userId: string;
+		userName: string;
+		email: string;
+		password: string;
 	};
 }
 

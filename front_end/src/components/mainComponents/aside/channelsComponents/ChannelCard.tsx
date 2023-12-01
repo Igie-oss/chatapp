@@ -10,22 +10,23 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import CreateGroupForm from "../groupChannelsComponents/createGroupComponents/CreateGroupForm";
-import { EContentType } from "../../chatBoardComponents/InputField";
+import CreateGroupForm from "@/components/mainComponents/groupComponents/createGroup/CreateGroupForm";
+import { EContentType } from "@/enum";
 import UserAvatar from "@/components/shared/UserAvatar";
 import useGetChannelIdSearchParams from "@/hooks/useGetChannelIdSearchParams";
+import { memo } from "react";
 type Props = {
 	message: TChannelMessages;
 };
 
-export default function ChannelCard({ message }: Props) {
+const ChannelCard = memo(function ChannelCard({ message }: Props) {
 	const userId = useAppStore((state) => state.user.userId);
 	const seTMembers = useAppStore((state) => state.seTMembers);
 	const channelId = useGetChannelIdSearchParams();
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		navigate(`/chat/channel?channelId=${message.channelId}`);
+		navigate(`/message/channel?channelId=${message.channelId}`);
 		seTMembers(message.members);
 	};
 	return (
@@ -107,4 +108,6 @@ export default function ChannelCard({ message }: Props) {
 			</div>
 		</li>
 	);
-}
+});
+
+export default ChannelCard;

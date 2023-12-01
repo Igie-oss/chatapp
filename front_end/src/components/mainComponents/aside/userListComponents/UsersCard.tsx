@@ -3,7 +3,6 @@ import UserAvatar from "@/components/shared/UserAvatar";
 import { useAppStore } from "@/services/states/store";
 import { customAxios } from "@/lib/helper";
 import uuid from "react-uuid";
-
 import {
 	Popover,
 	PopoverContent,
@@ -12,16 +11,18 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import CreateGroupForm from "../groupChannelsComponents/createGroupComponents/CreateGroupForm";
+import CreateGroupForm from "@/components/mainComponents/groupComponents/createGroup/CreateGroupForm";
+import { memo } from "react";
 type Props = {
 	user: TUser;
 };
 
-export default function UsersCard({ user }: Props) {
+const UsersCard = memo(function UsersCard({ user }: Props) {
 	const navigate = useNavigate();
 	const currentUser = useAppStore((state) => state.user);
 	const seTMembers = useAppStore((state) => state.seTMembers);
 	const members = useAppStore((state) => state.members);
+
 	const handleClick = async () => {
 		const members = [
 			{
@@ -40,14 +41,14 @@ export default function UsersCard({ user }: Props) {
 			.then((res) => {
 				if (res.status === 200) {
 					const resData = res.data;
-					navigate(`/chat/channel?channelId=${resData.channelId}`);
+					navigate(`/message/channel?channelId=${resData.channelId}`);
 				} else {
-					navigate(`/chat/channel?channelId=${uuid()}`);
+					navigate(`/message/channel?channelId=${uuid()}`);
 				}
 			})
 			.catch((err) => {
 				if (err) {
-					navigate(`/chat/channel?channelId=${uuid()}`);
+					navigate(`/message/channel?channelId=${uuid()}`);
 				}
 			});
 		seTMembers(members);
@@ -79,7 +80,7 @@ export default function UsersCard({ user }: Props) {
 						className="p-3 rounded-full border shadow-md transition-all motion-safe:hover:scale-105 opacity-0 group-hover:opacity-100">
 						<BsThreeDotsVertical className="w-5 h-5" />
 					</PopoverTrigger>
-					<PopoverContent className="px-1 flex flex-col gap-2 absolute -right-5">
+					<PopoverContent className="px-1 flex flex-col gap-2 absolute  -right-5">
 						<Dialog>
 							<DialogTrigger asChild>
 								<button
@@ -103,4 +104,6 @@ export default function UsersCard({ user }: Props) {
 			</div>
 		</li>
 	);
-}
+});
+
+export default UsersCard;

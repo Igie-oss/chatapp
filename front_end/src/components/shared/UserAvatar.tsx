@@ -2,7 +2,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useConvertBytesToUrl from "@/hooks/useConvertBytesToUrl";
 import useGetUserAvatar from "@/hooks/useGetUserAvatar";
 import placeholder from "@/assets/img-placeholder.jpg";
-function UserAvatar({ id }: { id: string }) {
+import { memo } from "react";
+
+const UserAvatar = memo(function UserAvatar({ id }: { id: string }) {
 	const avatarData = useGetUserAvatar(id);
 	const fileUrl = useConvertBytesToUrl(avatarData);
 
@@ -22,5 +24,5 @@ function UserAvatar({ id }: { id: string }) {
 			)}
 		</Avatar>
 	);
-}
+});
 export default UserAvatar;
