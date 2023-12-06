@@ -21,7 +21,7 @@ export default function Aside({ channel, toggelAside }: Props) {
 					type="button"
 					title="More"
 					onClick={toggelAside}
-					className="border p-2 rounded-full flex absolute top-2 left-2 xl:hidden ">
+					className=" p-2 flex absolute top-2 left-2 xl:hidden rounded-full  hover:bg-secondary">
 					<MdArrowBackIosNew className="w-6 h-6 pointer-events-none" />
 				</button>
 				<div className="h-20 w-20 rounded-full overflow-hidden">
@@ -44,7 +44,7 @@ export default function Aside({ channel, toggelAside }: Props) {
 				<p className="pb-2 border-b text-sm font-semibold px-2 text-muted-foreground">
 					Settings
 				</p>
-				<div className="w-full h-full flex flex-col items-start px-2 gap-1">
+				<div className="w-full h-full flex flex-col items-start px-2">
 					{inView === EInview.IS_OPTIONS ? (
 						<OptionsBtn channel={channel} setInView={setInView} />
 					) : inView === EInview.IS_GROUP_MEMBER_LIST ? (

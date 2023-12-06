@@ -55,7 +55,14 @@ const ChannelCard = memo(function ChannelCard({ message }: Props) {
 
 					<div className="w-full flex items-end gap-2">
 						{message.contentType === EContentType.IMG_URL ? (
-							<p className="text-xs  opacity-70 pointer-events-none">Pic...</p>
+							<p className="text-xs  opacity-70 pointer-events-none">
+								{message?.senderId === userId
+									? "You "
+									: message?.members.filter(
+											(member) => member.userId !== message.senderId
+									  )[0].userName + " "}
+								sent a photo
+							</p>
 						) : message.content ? (
 							<h5 className="text-xs  opacity-70 pointer-events-none">
 								{message?.senderId === userId ? "You: " : ""}

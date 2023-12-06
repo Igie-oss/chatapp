@@ -5,7 +5,9 @@ export default function CreateGroupBtn() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button>Create Group</Button>
+				<Button className="text-xs" size="sm">
+					Create Group
+				</Button>
 			</DialogTrigger>
 			<DialogContent>
 				<CreateGroupForm user={null} />

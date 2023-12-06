@@ -14,6 +14,7 @@ declare global {
 		userId: string;
 		userName: string;
 		email: string;
+		avatarId?: string;
 	};
 
 	type TMembers = {

@@ -18,16 +18,16 @@ export default function UsersListContainer({
 	const defferdText = useDeferredValue(searchText);
 	const filteredUsers = useFilterUsers(users as TUser[], defferdText);
 	return (
-		<div className="w-full flex flex-col gap-2 rounded-md border p-2">
-			<div className="w-full h-16 flex items-center">
+		<>
+			<header className="w-full h-16 flex items-center">
 				<input
-					type="search"
+					type="text"
 					placeholder="Search user..."
 					value={searchText || ""}
 					onChange={(e) => setSearchText(e.target.value)}
 					className="h-10 w-[80%] px-4 text-sm border rounded-md outline-none focus:bg-secondary/50 bg-transparent"
 				/>
-			</div>
+			</header>
 			<GroupUsersList
 				users={filteredUsers}
 				isLoading={isLoading}
@@ -35,6 +35,6 @@ export default function UsersListContainer({
 				handleAddUser={handleAddUser}
 				handleRemoveUser={handleRemoveUser}
 			/>
-		</div>
+		</>
 	);
 }

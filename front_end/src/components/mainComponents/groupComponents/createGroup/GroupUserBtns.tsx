@@ -30,14 +30,14 @@ export default function GroupUserBtns({
 							isAdmin: false,
 						})
 					}
-					className="text-sm text-primary border rounded-md w-20 h-8 font-semibold">
+					className="text-xs text-primary border rounded-md w-16 h-8 font-semibold">
 					Add
 				</button>
 			) : (
 				<button
 					type="button"
 					onClick={() => handleRemoveUser(user.userId)}
-					className="text-sm text-destructive border rounded-md w-20 h-8 font-semibold  border-destructive">
+					className="text-xs text-destructive border rounded-md w-16 h-8 font-semibold  border-destructive">
 					Remove
 				</button>
 			)}

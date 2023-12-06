@@ -27,7 +27,7 @@ export default function Aside() {
 	return (
 		<aside
 			ref={sideRef}
-			className="h-full w-full absolute left-0 top-0 z-40 gap-4  flex flex-col items-center p-2 bg-background  transition-all  lg:static lg:translate-x-0 lg:w-[50%] xl:max-w-[25rem]">
+			className="h-full w-full absolute left-0 top-0 z-40 gap-4 border-r flex flex-col items-center p-2 bg-background  transition-all  lg:static lg:translate-x-0 lg:w-[50%] xl:max-w-[25rem]">
 			<Header />
 			<Navigation navigate={navigate} setNavigate={setNavigate} />
 			<main className="w-full h-[78%] relative">

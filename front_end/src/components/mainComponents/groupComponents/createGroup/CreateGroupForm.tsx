@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DialogTrigger } from "@/components/ui/dialog";
+import { DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { useAppStore } from "@/services/states/store";
 import { EStatus } from "@/enum";
 import BtnLoader from "@/components/shared/loader/BtnLoader";
@@ -59,6 +59,7 @@ export default function CreateGroupForm({ user }: Props) {
 						sendAt: dateNow,
 					};
 					socket.emit("client_new_group_channel", emitNewGroup);
+					DialogClose;
 				}
 			})
 			.catch((err) => {

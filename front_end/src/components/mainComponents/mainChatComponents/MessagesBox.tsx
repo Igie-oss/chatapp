@@ -48,7 +48,7 @@ export default function MessagesBox() {
 	return (
 		<ul
 			ref={scrollRef}
-			className="w-full h-[82%] overflow-y-auto overflow-x-auto p-2 py-10 flex flex-col items-center gap-2 relative">
+			className="w-full h-[84%] overflow-y-auto overflow-x-auto p-2 py-10 flex flex-col items-center gap-2 relative">
 			<span ref={ref} />
 			{isFetching ? (
 				<MessageLoader />

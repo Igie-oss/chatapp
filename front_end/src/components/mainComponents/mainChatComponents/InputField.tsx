@@ -7,6 +7,7 @@ import uuid from "react-uuid";
 import ImageInput from "./ImageInput";
 import { customAxios } from "@/lib/helper";
 import { EStatus, EContentType } from "@/enum";
+import Typing from "@/components/shared/Typing";
 type Props = {
 	channel: TChannel;
 };
@@ -15,7 +16,7 @@ export default function InputField({ channel }: Props) {
 	const [content, setContent] = useState("");
 	const [contentType, setContentType] = useState(EContentType.TEXT);
 	const user = useAppStore((state) => state.user);
-	const { isTyping, handleInput } = useEmitTyping();
+	const { handleInput } = useEmitTyping();
 	const inputMsgRef = useRef<HTMLTextAreaElement | null>(null);
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -80,8 +81,8 @@ export default function InputField({ channel }: Props) {
 	}, [channel?.channelId]);
 
 	return (
-		<div className="w-full h-16 border rounded-md p-1 flex items-center justify-between">
-			{isTyping ? <Typing /> : null}
+		<div className="w-full h-16 border rounded-md p-1 flex items-center justify-between relative">
+			<Typing />
 			<form
 				onSubmit={handleSubmit}
 				encType="multipart/form-data"
@@ -129,16 +130,6 @@ export default function InputField({ channel }: Props) {
 					<span>Send</span>
 				</button>
 			</form>
-		</div>
-	);
-}
-
-function Typing() {
-	return (
-		<div className="absolute bottom-[105%] left-5  py-2 px-2 rounded-full flex items-center justify-center gap-1 bg-secondary">
-			<span className="w-[0.40rem] h-[0.40rem] rounded-full bg-primary animate-bounce transition-all delay-100" />
-			<span className="w-[0.40rem] h-[0.40rem] rounded-full bg-primary animate-bounce transition-all delay-200" />
-			<span className="w-[0.40rem] h-[0.40rem] rounded-full bg-primary animate-bounce transition-all delay-300" />
 		</div>
 	);
 }

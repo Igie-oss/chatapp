@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import UserAvatar from "@/components/shared/UserAvatar";
 import { IoIosArrowBack } from "react-icons/io";
+import { EInview } from "@/enum";
 type Props = {
 	setInView: Dispatch<SetStateAction<EInview>>;
 	members: TMembers[];
@@ -12,7 +13,7 @@ export default function GroupChannelMemberList({ members, setInView }: Props) {
 				type="button"
 				title="Close"
 				onClick={() => setInView(EInview.IS_OPTIONS)}
-				className="border rounded-full p-2 mb-2">
+				className=" p-2 mb-2 rounded-full  hover:bg-secondary">
 				<IoIosArrowBack className="w-6 h-6" />
 			</button>
 			<ul className="w-full h-full flex flex-col gap-1 overflow-y-auto">

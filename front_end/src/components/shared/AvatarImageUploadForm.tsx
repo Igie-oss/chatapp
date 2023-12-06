@@ -34,7 +34,7 @@ export default function AvatarImageUploadForm({ id }: Props) {
 		if (!id || !imageData) return;
 		const formUploadData = new FormData();
 		formUploadData.append("avatarUpload", imageData);
-		formUploadData.append("id", id);
+		formUploadData.append("userId", id);
 		setStatus({ status: EStatus.IS_LOADING });
 		customAxios("/images/uploadavatar", {
 			method: "POST",
@@ -109,12 +109,12 @@ export default function AvatarImageUploadForm({ id }: Props) {
 				onChange={handleInput}
 				className="hidden"
 			/>
-			<DialogFooter className="mt-5">
+			<DialogFooter className="mt-5 gap-4">
 				<DialogTrigger
 					title="Cancel"
 					type="button"
 					disabled={status?.status === EStatus.IS_LOADING}
-					className="bg-secondary h-full w-40 rounded-md">
+					className="bg-secondary h-9 lg:h-full w-40 rounded-md">
 					Cancel
 				</DialogTrigger>
 				<Button

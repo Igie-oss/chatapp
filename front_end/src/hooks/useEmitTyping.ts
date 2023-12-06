@@ -37,5 +37,6 @@ export default function useEmitTyping() {
 			socket.off("server_end_typing");
 		};
 	}, [channelId]);
+
 	return { isTyping, handleInput };
 }

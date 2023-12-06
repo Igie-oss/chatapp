@@ -34,7 +34,7 @@ const GroupUsersList = memo(function GroupUsersList({
 										<div className="w-8 h-8">
 											<UserAvatar id={u.userId} />
 										</div>
-										<p className="text-sm font-semibold">
+										<p className="text-xs font-normal">
 											{userId === u.userId ? "You" : u.userName}
 										</p>
 									</div>

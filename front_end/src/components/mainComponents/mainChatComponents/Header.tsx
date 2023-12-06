@@ -28,7 +28,7 @@ export default function Header({ channel, toggelAside }: Props) {
 						<Link
 							title="Close"
 							to="/message/channel"
-							className="lg:hidden border p-2 rounded-full flex hover:bg-secondary">
+							className="lg:hidden rounded-full  p-2  flex hover:bg-secondary">
 							<MdArrowBackIosNew className="w-6 h-6 pointer-events-none" />
 						</Link>
 						{channel?.channelId ? (
@@ -58,7 +58,7 @@ export default function Header({ channel, toggelAside }: Props) {
 							type="button"
 							title="More"
 							onClick={toggelAside}
-							className="border p-2 rounded-full flex hover:bg-secondary xl:hidden">
+							className=" rounded-full p-2 flex hover:bg-secondary xl:hidden">
 							<BsThreeDotsVertical className="w-6 h-6" />
 						</button>
 					</div>
