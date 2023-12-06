@@ -9,10 +9,9 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { HiOutlineUserGroup } from "react-icons/hi";
 import CreateGroupForm from "@/components/mainComponents/groupComponents/createGroup/CreateGroupForm";
 import { memo } from "react";
+import { MoreVertical, Users } from "lucide-react";
 type Props = {
 	user: TUser;
 };
@@ -78,7 +77,7 @@ const UsersCard = memo(function UsersCard({ user }: Props) {
 					<PopoverTrigger
 						title="More"
 						className="p-3 rounded-full border shadow-md transition-all motion-safe:hover:scale-105 opacity-0 group-hover:opacity-100">
-						<BsThreeDotsVertical className="w-5 h-5" />
+						<MoreVertical className="w-5 h-5" />
 					</PopoverTrigger>
 					<PopoverContent className="px-1 flex flex-col gap-2 absolute  -right-5">
 						<Dialog>
@@ -86,7 +85,7 @@ const UsersCard = memo(function UsersCard({ user }: Props) {
 								<button
 									type="button"
 									className="w-full h-10 flex items-center gap-4 text-start px-2 rounded-md hover:bg-secondary/50 text-sm">
-									<HiOutlineUserGroup className="w-5 h-5" /> <p>Create group</p>
+									<Users className="w-5 h-5" /> <p>Create group</p>
 								</button>
 							</DialogTrigger>
 							<DialogContent>

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { BsImage } from "react-icons/bs";
 import { EContentType, EStatus } from "@/enum";
 type Props = {
 	status: TFormStatus | null;
@@ -8,7 +7,7 @@ type Props = {
 	setContent: Dispatch<SetStateAction<string>>;
 	setContentType: Dispatch<SetStateAction<EContentType>>;
 };
-import { MdOutlineClose } from "react-icons/md";
+import { Image, X } from "lucide-react";
 export default function ImageInput({
 	status,
 	content,
@@ -64,7 +63,7 @@ export default function ImageInput({
 						disabled={status?.status === EStatus.IS_LOADING}
 						onClick={() => setContent("")}
 						className="absolute -top-5 -right-5 rounded-full p-1 border border-primary bg-background">
-						<MdOutlineClose className="w-4 h-4" />
+						<X className="w-4 h-4" />
 					</button>
 				</div>
 			)}
@@ -74,7 +73,7 @@ export default function ImageInput({
 					type="button"
 					onClick={() => inputImgRef?.current?.click()}
 					className="p-1 absolute right-1 top-[0.20rem]">
-					<BsImage className="w-8 h-8 pointer-events-none text-primary" />
+					<Image className="w-8 h-8 pointer-events-none text-primary" />
 				</button>
 			)}
 		</>

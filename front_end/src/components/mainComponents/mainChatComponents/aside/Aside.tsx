@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-import { MdArrowBackIosNew } from "react-icons/md";
+import { ChevronLeft } from "lucide-react";
 import UserAvatar from "@/components/shared/UserAvatar";
 import { useAppStore } from "@/services/states/store";
 import { useState } from "react";
@@ -22,7 +22,7 @@ export default function Aside({ channel, toggelAside }: Props) {
 					title="More"
 					onClick={toggelAside}
 					className=" p-2 flex absolute top-2 left-2 xl:hidden rounded-full  hover:bg-secondary">
-					<MdArrowBackIosNew className="w-6 h-6 pointer-events-none" />
+					<ChevronLeft className="w-6 h-6 pointer-events-none" />
 				</button>
 				<div className="h-20 w-20 rounded-full overflow-hidden">
 					<UserAvatar

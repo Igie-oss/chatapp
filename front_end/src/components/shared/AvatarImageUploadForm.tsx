@@ -2,7 +2,7 @@
 import { DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import { useRef, useState } from "react";
-import { BsImage } from "react-icons/bs";
+import { Image } from "lucide-react";
 import { customAxios } from "@/lib/helper";
 import { EStatus } from "@/enum";
 import BtnsLoaderSpinner from "./loader/BtnLoader";
@@ -82,7 +82,7 @@ export default function AvatarImageUploadForm({ id }: Props) {
 					type="button"
 					disabled={status?.status === EStatus.IS_LOADING}
 					onClick={() => inputImgRef?.current?.click()}>
-					<BsImage className="w-28 h-32 pointer-events-none text-muted-foreground" />
+					<Image className="w-28 h-32 pointer-events-none text-muted-foreground" />
 				</button>
 			) : (
 				<>

@@ -1,6 +1,5 @@
-import { BsChatLeftDots, BsPerson } from "react-icons/bs";
+import { User, Users, MessageSquare } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
-import { HiOutlineUserGroup } from "react-icons/hi";
 import { ENavigation } from "@/enum";
 type Props = {
 	navigate: TNavigation;
@@ -15,7 +14,7 @@ export default function Navigation({ navigate, setNavigate }: Props) {
 				className={`flex flex-col items-center p-1 px-3 gap-1  hover:text-primary ${
 					navigate.isShow === ENavigation.IS_CHANNEL_LIST ? "text-primary" : ""
 				}`}>
-				<BsChatLeftDots className="w-5 h-5" />
+				<MessageSquare className="w-5 h-5" />
 				<p className="text-[9px] font-semibold">Messages</p>
 			</button>
 			<button
@@ -24,7 +23,7 @@ export default function Navigation({ navigate, setNavigate }: Props) {
 				className={`flex flex-col items-center p-1 px-3 gap-1  hover:text-primary ${
 					navigate.isShow === ENavigation.IS_GROUP_LIST ? "text-primary" : ""
 				}`}>
-				<HiOutlineUserGroup className="w-5 h-5" />
+				<Users className="w-5 h-5" />
 				<p className="text-[9px] font-semibold">Group Chat</p>
 			</button>
 			<button
@@ -33,7 +32,7 @@ export default function Navigation({ navigate, setNavigate }: Props) {
 				className={`flex flex-col items-center p-1 px-3  gap-1  hover:text-primary ${
 					navigate.isShow === ENavigation.IS_USER_LIST ? "text-primary" : ""
 				}`}>
-				<BsPerson className="w-5 h-5" />
+				<User className="w-5 h-5" />
 				<p className=" text-[9px] font-semibold">Users</p>
 			</button>
 		</nav>

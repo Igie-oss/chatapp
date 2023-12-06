@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { FaRegEyeSlash, FaRegEye } from "react-icons/fa6";
-import { BsFillPersonFill } from "react-icons/bs";
+import { Eye, EyeOff, AtSign } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -11,6 +10,7 @@ import jwtDecode from "jwt-decode";
 import { Button } from "@/components/ui/button";
 import BtnLoader from "@/components/shared/loader/BtnLoader";
 import { EStatus } from "@/enum";
+
 export default function LoginForm() {
 	const navigate = useNavigate();
 	const [status, setStatus] = useState<TFormStatus | null>(null);
@@ -78,7 +78,7 @@ export default function LoginForm() {
 						}  `}
 					/>
 					<span className="absolute right-1 bottom-5 p-2">
-						<BsFillPersonFill className="w-5 h-5" />
+						<AtSign className="w-5 h-5" />
 					</span>
 					<p className="absolute right-1 bottom-0 text-[10px] lg:text-xs text-destructive">
 						{formik.touched.email && formik.errors.email
@@ -108,9 +108,9 @@ export default function LoginForm() {
 						onClick={() => setIsOpenEye((prev) => !prev)}
 						className="absolute right-1 bottom-5 p-2">
 						{isOpenEye ? (
-							<FaRegEye className="w-5 h-5 pointer-events-none" />
+							<Eye className="w-5 h-5 pointer-events-none" />
 						) : (
-							<FaRegEyeSlash className="w-5 h-5 pointer-events-none" />
+							<EyeOff className="w-5 h-5 pointer-events-none" />
 						)}
 					</button>
 					<p className="absolute right-1 bottom-0 text-[10px] lg:text-xs text-destructive">

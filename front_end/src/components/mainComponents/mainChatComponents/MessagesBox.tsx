@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, Fragment } from "react";
 import MessageCard from "./MessageCard";
-import { BiMessageAltMinus } from "react-icons/bi";
 import BtnsLoaderSpinner from "@/components/shared/loader/BtnLoader";
 import { useInView } from "react-intersection-observer";
 import useGetChannelMessages from "@/hooks/useGetChannelMessages";
 import useGetChannelIdSearchParams from "@/hooks/useGetChannelIdSearchParams";
+import { MessageSquare } from "lucide-react";
 export default function MessagesBox() {
 	const channelId = useGetChannelIdSearchParams();
 	const [cursor, setCursor] = useState("");
@@ -55,7 +55,7 @@ export default function MessagesBox() {
 			) : !messages?.length ? (
 				<div className="w-full flex flex-col items-center text-base gap-2 opacity-50">
 					<p>Empty</p>
-					<BiMessageAltMinus className="w-10 h-10" />
+					<MessageSquare className="w-10 h-10" />
 				</div>
 			) : (
 				<>

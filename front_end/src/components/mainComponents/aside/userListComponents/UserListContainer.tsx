@@ -1,7 +1,6 @@
 import { useDeferredValue, useState } from "react";
-import { MdArrowBackIosNew } from "react-icons/md";
 import UsersList from "./UsersList";
-import { BiSearch } from "react-icons/bi";
+import { Search, ChevronLeft } from "lucide-react";
 export default function UserListContainer() {
 	const [searchText, setSearchText] = useState("");
 	const searchTextDeffered = useDeferredValue(searchText);
@@ -13,11 +12,11 @@ export default function UserListContainer() {
 						type="button"
 						onClick={() => setSearchText("")}
 						className="p-2 w-fit h-fit flex rounded-full  hover:bg-secondary">
-						<MdArrowBackIosNew className="w-6 h-6 pointer-events-none opacity-70" />
+						<ChevronLeft className="w-6 h-6 pointer-events-none opacity-70" />
 					</button>
 				) : null}
 				<div className="w-[90%] h-10 flex items-center gap-2 border px-2 rounded-full border-border bg-secondary/50">
-					<BiSearch className="h-6 w-6 pointer-events-none opacity-70 " />
+					<Search className="h-6 w-6 pointer-events-none opacity-70 " />
 					<input
 						type="text"
 						placeholder="Search..."

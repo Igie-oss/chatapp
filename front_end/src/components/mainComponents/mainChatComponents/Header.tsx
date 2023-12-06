@@ -2,8 +2,8 @@
 import { Link } from "react-router-dom";
 import { socket } from "@/socket";
 import { useEffect } from "react";
-import { MdArrowBackIosNew } from "react-icons/md";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { ChevronLeft } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import UserAvatar from "@/components/shared/UserAvatar";
 import { useAppStore } from "@/services/states/store";
 type Props = {
@@ -29,7 +29,7 @@ export default function Header({ channel, toggelAside }: Props) {
 							title="Close"
 							to="/message/channel"
 							className="lg:hidden rounded-full  p-2  flex hover:bg-secondary">
-							<MdArrowBackIosNew className="w-6 h-6 pointer-events-none" />
+							<ChevronLeft className="w-6 h-6 pointer-events-none" />
 						</Link>
 						{channel?.channelId ? (
 							<div className="flex items-end gap-2">
@@ -59,7 +59,7 @@ export default function Header({ channel, toggelAside }: Props) {
 							title="More"
 							onClick={toggelAside}
 							className=" rounded-full p-2 flex hover:bg-secondary xl:hidden">
-							<BsThreeDotsVertical className="w-6 h-6" />
+							<MoreVertical className="w-6 h-6" />
 						</button>
 					</div>
 				</>

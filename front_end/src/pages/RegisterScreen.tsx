@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import BtnLoader from "@/components/shared/loader/BtnLoader";
 import VerifyOtp from "@/components/registerComponents/VerifyOtp";
 import { Link } from "react-router-dom";
-
+import { EStatus } from "@/enum";
 type UserName = {
 	userName: string;
 };
