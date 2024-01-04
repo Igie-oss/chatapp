@@ -1,8 +1,8 @@
-MERN Chat App with Socket.io  
+#MERN Chat App with Socket.io  
 
 🚀 A real-time chat application built using the MERN (MongoDB, Express.js, React, Node.js) stack with Socket.io for seamless and instant communication.
                 
-Features  
+##Features  
 
 ✉️ Real-time Messaging: Experience instant messaging with real-time updates using Socket.io for efficient communication.
         
@@ -12,7 +12,7 @@ Features
         
 📊 Responsive Design: Enjoy a responsive and user-friendly design that works seamlessly across various devices and screen sizes.
 
-Tech Stack         
+##Tech Stack         
 
 Frontend: React.js with functional components and hooks for a modern and efficient user interface.  
 Backend: Node.js and Express.js for server-side development.  
