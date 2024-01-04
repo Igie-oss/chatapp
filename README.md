@@ -14,7 +14,7 @@ Features
 
 Tech Stack         
 
-Frontend: React.js with functional components and hooks for a modern and efficient user interface.
-Backend: Node.js and Express.js for server-side development.
-Database: MongoDB for storing chat data in a scalable and flexible NoSQL database.
+Frontend: React.js with functional components and hooks for a modern and efficient user interface.  
+Backend: Node.js and Express.js for server-side development.  
+Database: MongoDB for storing chat data in a scalable and flexible NoSQL database.  
 Real-time Communication: Socket.io for enabling real-time, bidirectional, and event-based communication.      
